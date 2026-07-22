@@ -3,36 +3,103 @@ import "../styles/global.css";
 
 interface Props {
     title: string;
+    description?: string;
 }
 
-const { title } = Astro.props;
+const {
+    title,
+    description = "Passo es el software de gestión para academias de baile: pagos, asistencia y progreso de alumnos desde ~$1 USD por alumno al mes. Prueba gratis 30 días.",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL("/images/dashboard-laptop.png", Astro.site);
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            name: "Passo",
+            url: Astro.site?.href,
+            logo: new URL("/favicon.svg", Astro.site).href,
+            slogan: "Toda transformación comienza con un paso.",
+            email: "hola@passo.app",
+        },
+        {
+            "@type": "SoftwareApplication",
+            name: "Passo",
+            description:
+                "Plataforma de gestión para academias de baile: control de pagos, asistencia, calendario de clases y seguimiento del progreso de los alumnos.",
+            applicationCategory: "BusinessApplication",
+            operatingSystem: "Web, iOS, Android",
+            inLanguage: "es",
+            offers: [
+                {
+                    "@type": "Offer",
+                    name: "Plan Demo",
+                    price: "0",
+                    priceCurrency: "USD",
+                },
+                {
+                    "@type": "Offer",
+                    name: "Plan Básico",
+                    price: "1.00",
+                    priceCurrency: "USD",
+                    description: "Por alumno activo al mes",
+                },
+                {
+                    "@type": "Offer",
+                    name: "Plan Pro",
+                    price: "2.00",
+                    priceCurrency: "USD",
+                    description: "Por alumno activo al mes, con reportes personalizados",
+                },
+            ],
+        },
+    ],
+};
 ---
 
 <!doctype html>
 <html lang="es" class="scroll-smooth overflow-x-hidden">
     <head>
         <meta charset="UTF-8" />
-        <meta
-            name="description"
-            content="DanceFlow - La tecnología que hace crecer tu academia"
-        />
-        <meta name="viewport" content="width=device-width" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={canonical} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="theme-color" content="#0E1116" />
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Passo" />
+        <meta property="og:locale" content="es_CO" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:alt" content="Panel de control de Passo para academias de baile" />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Figtree:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
             rel="stylesheet"
         />
         <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
+
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     </head>
     <body
-        class="bg-background text-white antialiased selection:bg-primary selection:text-white overflow-x-hidden max-w-[100vw]"
+        class="bg-noche text-claro antialiased overflow-x-hidden max-w-[100vw]"
     >
         <slot />
     </body>

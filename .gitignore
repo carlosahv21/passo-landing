@@ -25,3 +25,7 @@ Thumbs.db
 
 # jetbrains setting folder
 .idea/
+
+# agent skills (regenerables desde skills-lock.json)
+.agents/
+.claude/

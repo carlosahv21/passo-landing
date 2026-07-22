@@ -1,77 +1,55 @@
-# DanceFlow - Landing Page
+# Passo — Landing Page
 
-Landing page moderna y de alto rendimiento para **DanceFlow**, la plataforma #1 de gestión para academias de baile.
+> Toda transformación comienza con un paso.
 
-## 🚀 Acerca del Proyecto
+Landing page de **Passo**, la plataforma de gestión para academias de baile: pagos, asistencia y progreso de alumnos, para que las academias dediquen menos tiempo a administrar y más tiempo a transformar vidas.
 
-Pagina de aterrizaje (Landing Page) diseñada para convertir visitantes en clientes, destacando las funcionalidades clave de DanceFlow:
+## Secciones
 
-- **Gestión Administrativa**: Control de pagos y finanzas.
-- **Retención de Alumnos**: Herramientas para evitar la deserción.
-- **Organización Operativa**: Gestión de clases, profesores y horarios.
+- **Hero**: slogan de marca + diagrama animado de paso básico de salsa (huellas con conteo 1-2-3, 5-6-7).
+- **Marquee**: géneros de baile en movimiento continuo.
+- **Dolores**: fuga de capital, deserción de alumnos, caos operativo.
+- **Manifiesto**: "El baile conecta personas. El baile transforma vidas."
+- **El camino (Paso 01/02/03)**: cobranza sin fricción, agenda bajo control, la huella de cada alumno.
+- **Precios**: Primer paso (gratis) / En movimiento / Gran salón, con toggle mensual/anual.
 
-Construida con enfoque en:
+## Identidad
 
-- **Velocidad**: Optimizada para carga instantánea.
-- **Diseño**: Estética moderna, limpia y profesional (Tema Oscuro/Azul).
-- **UX**: Navegación fluida y llamadas a la acción claras.
+- Paleta "noche eléctrica": `noche` `#0E1116`, `claro` `#E8EDF4`, `azul` `#0A84FF`, `oro` `#F2B33D`, `cielo` `#4DA3FF` (definida en `tailwind.config.mjs`).
+- Tipografía: Fraunces (display), Figtree (cuerpo), Space Grotesk (etiquetas y números).
+- Símbolo: la huella (`src/components/Huella.tsx`), usada como logo, checks y rastro de fondo.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-Este proyecto utiliza las siguientes tecnologías:
+- [Astro](https://astro.build/) + [React](https://react.dev/) (islands con `client:load` / `client:visible`)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/) — animaciones (respeta `prefers-reduced-motion`)
+- [Lucide React](https://lucide.dev/) — iconos
+- [Zustand](https://zustand-demo.pmnd.rs/) — estado de modales
 
-- **[Astro](https://astro.build/)**: Framework web para contenido estático y dinámico ultra-rápido.
-- **[React](https://reactjs.org/)**: Biblioteca para componentes interactivos de UI.
-- **[Tailwind CSS](https://tailwindcss.com/)**: Framework de utilidades para diseño rápido y responsivo.
-- **[Framer Motion](https://www.framer.com/motion/)**: Librería para animaciones fluidas y gestos.
-- **[Lucide React](https://lucide.dev/)**: Iconos vectoriales ligeros y consistentes.
-
-## 🧞 Comandos
+## Comandos
 
 Todos los comandos se ejecutan desde la raíz del proyecto:
 
 | Comando           | Acción                                               |
 | :---------------- | :--------------------------------------------------- |
-| `npm install`     | Instala las dependencia del proyecto                 |
+| `npm install`     | Instala las dependencias del proyecto                |
 | `npm run dev`     | Inicia el servidor de desarrollo en `localhost:4321` |
 | `npm run build`   | Compila el sitio para producción en `./dist/`        |
 | `npm run preview` | Vista previa del build localmente                    |
 
-## 📂 Estructura del Proyecto
+> Gestor de paquetes: **npm** (único lockfile: `package-lock.json`).
+
+## Estructura del Proyecto
 
 ```text
 /
-├── public/       # Activos estáticos (imágenes, fuentes, favicon)
+├── public/         # Activos estáticos (imágenes, favicon)
 ├── src/
-│   ├── components/ # Componentes reutilizables (React/Astro)
-│   ├── layouts/    # Plantillas de diseño base
+│   ├── components/ # Componentes React (Hero, Steps, Pricing, Huella…)
+│   ├── layouts/    # Plantilla base (fuentes, meta)
 │   ├── pages/      # Rutas del sitio
+│   ├── store/      # Estado de modales (Zustand)
 │   └── styles/     # Estilos globales
 └── package.json
 ```
-
-## 📝 Instalación y Uso
-
-1.  **Clonar el repositorio**
-
-    ```bash
-    git clone https://github.com/tu-usuario/dance-flow-landing.git
-    cd dance-flow-landing
-    ```
-
-2.  **Instalar dependencias**
-
-    ```bash
-    npm install
-    ```
-
-3.  **Iniciar servidor de desarrollo**
-
-    ```bash
-    npm run dev
-    ```
-
-4.  **Construir para producción**
-    ```bash
-    npm run build
-    ```

@@ -2,24 +2,24 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import SuccessFeatures from "../components/SuccessFeatures";
-import ProductShowcase from "../components/ProductShowcase";
 import FeaturesGrid from "../components/FeaturesGrid";
-import Students from "../components/Students";
+import Manifesto from "../components/Manifesto";
+import Steps from "../components/Steps";
+import Calculadora from "../components/Calculadora";
 import Pricing from "../components/Pricing";
 import Footer from "../components/Footer";
 import ModalManager from "../components/modals/ModalManager";
 ---
 
-<Layout title="DanceFlow | Gestión Inteligente para Academias de Baile">
+<Layout title="Passo — Software de gestión para academias de baile">
     <Navbar client:load />
 
     <main class="min-h-screen">
         <Hero client:load />
         <FeaturesGrid client:visible />
-        <SuccessFeatures client:visible />
-        <ProductShowcase client:visible />
-        <Students client:visible />
+        <Manifesto client:visible />
+        <Steps client:visible />
+        <Calculadora client:visible />
         <Pricing client:visible />
     </main>
 

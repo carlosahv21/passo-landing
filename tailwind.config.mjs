@@ -5,15 +5,25 @@ export default {
     theme: {
         extend: {
             colors: {
+                // Paleta Passo — "noche eléctrica"
+                "noche": "#0E1116",
+                "pista": "#161C24",
+                "claro": "#E8EDF4",
+                "azul": "#0A84FF",
+                "oro": "#F2B33D",
+                "cielo": "#4DA3FF",
+                // Aliases legacy (modales aún los usan) — mapeados a la nueva paleta
+                "background": "#0A0D12",
                 "primary-blue": "#0A84FF",
-                "bg-dark": "#121212",
-                "container-dark": "#1E1E1E",
-                "text-base": "#E0E0E0",
-                "border-base": "#2D2D2D",
-                "mint-green": "#00F5D4",
+                "bg-dark": "#0E1116",
+                "container-dark": "#161C24",
+                "text-base": "#E8EDF4",
+                "border-base": "#26303C",
             },
             fontFamily: {
-                "sans": ["Inter", "sans-serif"],
+                "sans": ["Figtree", "sans-serif"],
+                "display": ["Fraunces", "serif"],
+                "mono": ["Space Grotesk", "monospace"],
             },
             borderRadius: {
                 "DEFAULT": "0.25rem",

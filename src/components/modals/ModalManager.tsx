@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useModalStore } from '../../store/modalStore';
 import InfoModal from './InfoModal';
-import { Users, ShieldCheck, FileText, Lock, Globe, Cookie, MessageCircle, Mail } from 'lucide-react';
+import RegistroModal from './RegistroModal';
+import { Users, ShieldCheck, FileText, Lock, Globe, Cookie, MessageCircle, Mail, ArrowRight } from 'lucide-react';
 
 const ModalManager: React.FC = () => {
     const { activeModal, closeModal } = useModalStore();
@@ -9,6 +10,9 @@ const ModalManager: React.FC = () => {
 
     return (
         <>
+            {/* Modal Registro */}
+            <RegistroModal isOpen={activeModal === 'registro'} onClose={closeModal} />
+
             {/* Modal Nosotros */}
             <InfoModal
                 isOpen={activeModal === 'about'}
@@ -18,7 +22,7 @@ const ModalManager: React.FC = () => {
             >
                 <div className="space-y-6">
                     <p>
-                        DanceFlow nace de una visión clara: <span className="text-white font-semibold">los directores de arte deben dedicarse al arte, no a la administración.</span>
+                        Passo nace de una experiencia personal: <span className="text-white font-semibold">el baile conecta personas y transforma vidas.</span> Los directores deben dedicarse al arte, no a la administración.
                     </p>
                     <p>
                         Vimos cómo directores talentosos perdían horas frente a hojas de Excel complejas, lidiando con errores de cobro y registros manuales que robaban su energía creativa.
@@ -26,7 +30,7 @@ const ModalManager: React.FC = () => {
                     <div className="bg-primary-blue/5 border border-primary-blue/10 p-6 rounded-2xl">
                         <h4 className="text-primary-blue font-bold mb-2">Nuestra Misión</h4>
                         <p>
-                            Eliminar la fricción operativa. Creamos una plataforma fluida que automatiza lo tedioso, permitiéndote escalar tu academia sin perder el control ni la calma.
+                            Impulsar el crecimiento de toda la comunidad de baile: academias, profesores y alumnos. Automatizamos lo tedioso para que dediques menos tiempo a tareas administrativas y más tiempo a transformar vidas.
                         </p>
                     </div>
                 </div>
@@ -41,7 +45,7 @@ const ModalManager: React.FC = () => {
             >
                 <div className="space-y-6">
                     <p>
-                        En DanceFlow, tu tranquilidad es nuestra prioridad. Entendemos que la información de tu academia es su activo más valioso.
+                        En Passo, tu tranquilidad es nuestra prioridad. Entendemos que la información de tu academia es su activo más valioso.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="p-4 bg-white/5 rounded-xl border border-white/5">
@@ -108,8 +112,8 @@ const ModalManager: React.FC = () => {
                                 <h4 className="text-white font-bold flex items-center gap-2">
                                     <FileText size={16} /> Términos de Servicio
                                 </h4>
-                                <p>Al utilizar DanceFlow, usted acepta los términos que rigen el uso razonable de la plataforma. El servicio se proporciona bajo una suscripción mensual o anual revocable.</p>
-                                <p>DanceFlow no se hace responsable de las malas praxis contables realizadas por el usuario, siendo este el único responsable de la veracidad de los datos introducidos.</p>
+                                <p>Al utilizar Passo, usted acepta los términos que rigen el uso razonable de la plataforma. El servicio se proporciona bajo una suscripción mensual o anual revocable.</p>
+                                <p>Passo no se hace responsable de las malas praxis contables realizadas por el usuario, siendo este el único responsable de la veracidad de los datos introducidos.</p>
                             </div>
                         )}
                         {legalTab === 'cookies' && (
@@ -158,11 +162,11 @@ const ModalManager: React.FC = () => {
                                     <p className="text-sm text-slate-400 font-light">Respuesta inmediata</p>
                                 </div>
                             </div>
-                            <span className="material-symbols-outlined text-slate-500 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            <ArrowRight size={20} className="text-slate-500 group-hover:translate-x-1 transition-transform" />
                         </a>
 
                         <a
-                            href="mailto:hola@danceflow.com"
+                            href="mailto:hola@passo.app"
                             className="flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all group"
                         >
                             <div className="flex items-center gap-4">
@@ -171,10 +175,10 @@ const ModalManager: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-white font-bold">Correo Corporativo</h4>
-                                    <p className="text-sm text-slate-400 font-light">hola@danceflow.com</p>
+                                    <p className="text-sm text-slate-400 font-light">hola@passo.app</p>
                                 </div>
                             </div>
-                            <span className="material-symbols-outlined text-slate-500 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            <ArrowRight size={20} className="text-slate-500 group-hover:translate-x-1 transition-transform" />
                         </a>
                     </div>
 
