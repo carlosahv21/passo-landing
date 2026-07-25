@@ -13,9 +13,9 @@ yarn-error.log*
 pnpm-debug.log*
 
 
-# environment variables
+# environment variables (solo secretos; las PUBLIC_* de .env.development/.env.production
+# son públicas — quedan en el bundle del navegador — y se commitean)
 .env
-.env.production
 
 # macOS-specific files
 .DS_Store
