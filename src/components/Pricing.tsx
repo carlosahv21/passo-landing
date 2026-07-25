@@ -15,7 +15,7 @@ const Pricing = () => {
     const precios = usePreciosCOP();
 
     return (
-        <section className="py-24 relative" id="pricing">
+        <section className="py-20 md:py-28 relative" id="pricing">
             <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

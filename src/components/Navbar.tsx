@@ -4,6 +4,15 @@ import { Menu, X } from 'lucide-react';
 import { useModalStore } from '../store/modalStore';
 import Huella from './Huella';
 
+const APP_URL = import.meta.env.PUBLIC_APP_URL;
+
+const links = [
+    { id: 'producto', label: 'Producto' },
+    { id: 'para-quien', label: 'Para quién' },
+    { id: 'calculadora', label: 'Calculadora' },
+    { id: 'pricing', label: 'Precios' },
+];
+
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -26,21 +35,25 @@ export default function Navbar() {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-8 font-mono text-sm uppercase tracking-widest">
-                        <button onClick={() => goTo('features')} className="text-claro/60 hover:text-claro transition-colors">El camino</button>
-                        <button onClick={() => goTo('calculadora')} className="text-claro/60 hover:text-claro transition-colors">Calculadora</button>
-                        <button onClick={() => goTo('pricing')} className="text-claro/60 hover:text-claro transition-colors">Precios</button>
-                        <button onClick={() => useModalStore.getState().openModal('about')} className="text-claro/60 hover:text-claro transition-colors">Nosotros</button>
+                        {links.map((l) => (
+                            <button key={l.id} onClick={() => goTo(l.id)} className="text-claro/60 hover:text-claro transition-colors">
+                                {l.label}
+                            </button>
+                        ))}
                     </div>
 
-                    {/* CTA */}
-                    <div className="hidden md:block">
+                    {/* Acciones */}
+                    <div className="hidden md:flex items-center gap-5">
+                        <a href={APP_URL} className="text-sm font-semibold text-claro/70 hover:text-claro transition-colors">
+                            Iniciar sesión
+                        </a>
                         <motion.button
                             whileHover={{ scale: 1.04 }}
                             whileTap={{ scale: 0.96 }}
                             onClick={() => useModalStore.getState().openModal('registro')}
                             className="bg-azul text-claro text-sm font-bold px-5 py-2.5 rounded-full shadow-lg shadow-azul/20 hover:brightness-110 transition-all"
                         >
-                            Da el primer paso
+                            Prueba 30 días gratis
                         </motion.button>
                     </div>
 
@@ -67,15 +80,20 @@ export default function Navbar() {
                         className="md:hidden bg-noche border-b border-claro/10"
                     >
                         <div className="px-4 pt-2 pb-5 space-y-1">
-                            <button onClick={() => goTo('features')} className="text-claro/70 hover:text-claro block px-3 py-2 text-base font-medium text-left w-full">El camino</button>
-                            <button onClick={() => goTo('pricing')} className="text-claro/70 hover:text-claro block px-3 py-2 text-base font-medium text-left w-full">Precios</button>
-                            <button onClick={() => { setIsOpen(false); useModalStore.getState().openModal('about'); }} className="text-claro/70 hover:text-claro block px-3 py-2 text-base font-medium text-left w-full">Nosotros</button>
+                            {links.map((l) => (
+                                <button key={l.id} onClick={() => goTo(l.id)} className="text-claro/70 hover:text-claro block px-3 py-2 text-base font-medium text-left w-full">
+                                    {l.label}
+                                </button>
+                            ))}
+                            <a href={APP_URL} className="text-claro/70 hover:text-claro block px-3 py-2 text-base font-medium">
+                                Iniciar sesión
+                            </a>
                             <div className="pt-3">
                                 <button
                                     onClick={() => { setIsOpen(false); useModalStore.getState().openModal('registro'); }}
                                     className="w-full bg-azul text-claro text-base font-bold px-8 py-3.5 rounded-full shadow-lg shadow-azul/20"
                                 >
-                                    Da el primer paso
+                                    Prueba 30 días gratis
                                 </button>
                             </div>
                         </div>

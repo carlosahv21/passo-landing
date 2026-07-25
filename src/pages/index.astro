@@ -2,27 +2,37 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import FeaturesGrid from "../components/FeaturesGrid";
+import Retos from "../components/Retos";
+import Producto from "../components/Producto";
+import AppAlumnos from "../components/AppAlumnos";
+import ParaQuien from "../components/ParaQuien";
 import Manifesto from "../components/Manifesto";
-import Steps from "../components/Steps";
 import Calculadora from "../components/Calculadora";
 import Pricing from "../components/Pricing";
+import CTAFinal from "../components/CTAFinal";
 import Footer from "../components/Footer";
+import HuellaTrail from "../components/HuellaTrail";
+import WhatsAppFloat from "../components/WhatsAppFloat";
 import ModalManager from "../components/modals/ModalManager";
 ---
 
 <Layout title="Passo — Software de gestión para academias de baile">
     <Navbar client:load />
 
-    <main class="min-h-screen">
+    <main class="min-h-screen relative">
+        <HuellaTrail client:visible />
         <Hero client:load />
-        <FeaturesGrid client:visible />
+        <Retos client:visible />
+        <Producto client:visible />
+        <AppAlumnos client:visible />
+        <ParaQuien client:visible />
         <Manifesto client:visible />
-        <Steps client:visible />
         <Calculadora client:visible />
         <Pricing client:visible />
+        <CTAFinal client:visible />
     </main>
 
     <Footer client:visible />
+    <WhatsAppFloat client:load />
     <ModalManager client:load />
 </Layout>

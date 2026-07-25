@@ -3,9 +3,9 @@ import { Loader2 } from 'lucide-react';
 import InfoModal from './InfoModal';
 import Huella from '../Huella';
 
-// URLs configurables por entorno; los defaults son placeholders
-const API_REGISTER_URL = import.meta.env.PUBLIC_API_REGISTER_URL ?? 'https://api.passo.app/api/register';
-const APP_URL = import.meta.env.PUBLIC_APP_URL ?? 'https://app.passo.app';
+// URLs por entorno: .env.development (dev) / .env.production (build)
+const API_REGISTER_URL = import.meta.env.PUBLIC_API_REGISTER_URL;
+const APP_URL = import.meta.env.PUBLIC_APP_URL;
 
 interface RegistroModalProps {
     isOpen: boolean;

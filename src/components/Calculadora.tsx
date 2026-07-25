@@ -17,7 +17,7 @@ const Calculadora = () => {
     const porcentaje = ((precioPlan / mensualidad) * 100).toFixed(1);
 
     return (
-        <section className="py-24 relative" id="calculadora">
+        <section className="py-20 md:py-28 relative" id="calculadora">
             <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -104,7 +104,8 @@ const Calculadora = () => {
                     </div>
 
                     {/* Resultado */}
-                    <div className="p-9 rounded-3xl bg-azul/[0.07] border border-azul/25 flex flex-col justify-center text-center">
+                    {/* fondo sólido (mezcla noche+azul): translúcido dejaba ver las huellas del fondo */}
+                    <div className="p-9 rounded-3xl bg-[#0E1926] border border-azul/25 flex flex-col justify-center text-center">
                         <div className="flex justify-center gap-2 mb-6 text-azul" aria-hidden="true">
                             {Array.from({ length: Math.min(alumnosARetener, 6) }, (_, i) => (
                                 <Huella key={i} size={16} flip={i % 2 === 0} rotate={i % 2 === 0 ? -12 : 12} />

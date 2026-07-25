@@ -32,7 +32,7 @@ const Footer = () => {
                     <div>
                         <h5 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Producto</h5>
                         <ul className="space-y-4 text-sm text-claro/50">
-                            <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>El camino</button></li>
+                            <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('producto')?.scrollIntoView({ behavior: 'smooth' })}>Producto</button></li>
                             <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>Precios</button></li>
                             <li><a className="hover:text-claro transition-colors" href="#">Próximamente</a></li>
                         </ul>

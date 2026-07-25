@@ -38,18 +38,3 @@
     background-color: rgba(14, 17, 22, 0.8);
     border-bottom: 1px solid rgba(232, 237, 244, 0.08);
 }
-
-/* Marquee de géneros */
-@keyframes marquee {
-    to {
-        transform: translateX(-50%);
-    }
-}
-.marquee-track {
-    animation: marquee 28s linear infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-        animation: none;
-    }
-}

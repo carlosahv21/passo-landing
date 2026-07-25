@@ -6,12 +6,24 @@ Landing page de **Passo**, la plataforma de gestión para academias de baile: pa
 
 ## Secciones
 
-- **Hero**: slogan de marca + diagrama animado de paso básico de salsa (huellas con conteo 1-2-3, 5-6-7).
-- **Marquee**: géneros de baile en movimiento continuo.
-- **Dolores**: fuga de capital, deserción de alumnos, caos operativo.
+- **Hero**: slogan de marca + foto de bailarina + mockup del dashboard.
+- **Retos**: pagos desordenados, asistencias dispersas, deserción invisible → "Passo organiza todo eso."
+- **Producto** (`#producto`): gestiona, analiza y haz crecer tu academia.
+- **App alumnos** (`#alumnos`): mockup de teléfono (racha, QR, progreso) hecho en HTML/CSS.
+- **Para quién** (`#para-quien`): Academias / Profesores / Alumnos.
 - **Manifiesto**: "El baile conecta personas. El baile transforma vidas."
-- **El camino (Paso 01/02/03)**: cobranza sin fricción, agenda bajo control, la huella de cada alumno.
-- **Precios**: Primer paso (gratis) / En movimiento / Gran salón, con toggle mensual/anual.
+- **Calculadora** (`#calculadora`): alumnos a retener según plan y mensualidad.
+- **Precios** (`#pricing`): Demo / Básico / Pro por alumno en COP (TRM viva).
+- **CTA final**: "¿Listo para dar el siguiente paso?"
+- Rastro decorativo de huellas azul/oro por el margen izquierdo (`HuellaTrail.tsx`).
+
+## Imágenes pendientes de subir
+
+Los slots con gradiente (`MediaSlot.tsx`) esperan estos archivos en `public/images/`;
+al subirlos, reemplazar el `<MediaSlot>` correspondiente por un `<img>`:
+
+- `hero-dancer.png` — bailarina del hero
+- `quien-academias.jpg`, `quien-profesores.jpg`, `quien-alumnos.jpg` — cards "Para quién"
 
 ## Identidad
 
