@@ -26,7 +26,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <a href="#" className="flex items-center gap-2.5" aria-label="Passo — inicio">
-                        <img src="/images/logo-passo.png" alt="" className="h-8 w-auto" />
+                        <img src="/images/logo-passo.webp" alt="" className="h-8 w-auto" />
                         <span className="font-display text-2xl font-semibold tracking-tight text-claro">
                             Passo
                         </span>

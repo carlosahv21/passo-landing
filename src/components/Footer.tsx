@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="grid md:grid-cols-4 gap-16 mb-20">
                     <div className="col-span-1 md:col-span-2">
                         <div className="flex items-center gap-3 mb-6">
-                            <img src="/images/logo-passo.png" alt="" className="h-10 w-auto" />
+                            <img src="/images/logo-passo.webp" alt="" className="h-10 w-auto" />
                             <span className="font-display text-3xl font-semibold tracking-tight text-claro">Passo</span>
                         </div>
                         <p className="font-display italic text-xl text-claro/70 mb-6">

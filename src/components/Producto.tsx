@@ -52,7 +52,7 @@ const Producto = () => {
                     >
                         <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[70%] h-28 bg-azul/15 blur-[100px] -z-10"></div>
                         <img
-                            src="/images/dashboard-laptop.png"
+                            src="/images/dashboard-laptop.webp"
                             alt="Dashboard de Passo con ingresos, alumnos activos y asistencias"
                             loading="lazy"
                             decoding="async"
