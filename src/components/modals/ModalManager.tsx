@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useModalStore } from '../../store/modalStore';
 import InfoModal from './InfoModal';
 import RegistroModal from './RegistroModal';
+import VideoModal from './VideoModal';
 import { Users, ShieldCheck, FileText, Lock, Globe, Cookie, MessageCircle, Mail, ArrowRight } from 'lucide-react';
 
 const ModalManager: React.FC = () => {
@@ -12,6 +13,9 @@ const ModalManager: React.FC = () => {
         <>
             {/* Modal Registro */}
             <RegistroModal isOpen={activeModal === 'registro'} onClose={closeModal} />
+
+            {/* Modal Video demo */}
+            <VideoModal isOpen={activeModal === 'video'} onClose={closeModal} />
 
             {/* Modal Nosotros */}
             <InfoModal

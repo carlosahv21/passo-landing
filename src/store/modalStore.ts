@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "about" | "guarantee" | "legal" | "contact" | "registro" | null;
+export type ModalType = "about" | "guarantee" | "legal" | "contact" | "registro" | "video" | null;
 
 interface ModalState {
     activeModal: ModalType;

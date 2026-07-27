@@ -62,7 +62,7 @@ const Hero = () => {
                                 Prueba 30 días gratis
                             </button>
                             <button
-                                onClick={() => document.getElementById('producto')?.scrollIntoView({ behavior: 'smooth' })}
+                                onClick={() => useModalStore.getState().openModal('video')}
                                 className="flex items-center gap-3 text-claro/80 hover:text-claro font-semibold px-4 py-4 transition-colors"
                             >
                                 Ver cómo funciona
@@ -94,12 +94,12 @@ const Hero = () => {
                             alt="Panel de control de Passo para academias de baile"
                             fetchPriority="high"
                             className="w-[108%] max-w-none -ml-8"
-                            src="/images/dashboard-laptop.png"
+                            src="/images/dashboard-laptop.webp"
                         />
                         <img
                             alt="App móvil de Passo mostrando una clase de salsa"
                             className="absolute -bottom-0 -right-20 w-[65%] drop-shadow-2xl"
-                            src="/images/mobile-app-iso.png"
+                            src="/images/mobile-app-iso.webp"
                         />
                     </motion.div>
                 </div>
