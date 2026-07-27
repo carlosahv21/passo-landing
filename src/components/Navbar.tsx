@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useModalStore } from '../store/modalStore';
-import Huella from './Huella';
 
 const APP_URL = import.meta.env.PUBLIC_APP_URL;
 
@@ -26,8 +25,8 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <a href="#" className="flex items-center gap-2" aria-label="Passo — inicio">
-                        <Huella size={15} className="text-azul" rotate={12} />
+                    <a href="#" className="flex items-center gap-2.5" aria-label="Passo — inicio">
+                        <img src="/images/logo-passo.png" alt="" className="h-8 w-auto" />
                         <span className="font-display text-2xl font-semibold tracking-tight text-claro">
                             Passo
                         </span>
