@@ -12,33 +12,82 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// og:image se queda en PNG: varios scrapers de redes todavía no leen WebP.
 const ogImage = new URL("/images/dashboard-laptop.png", Astro.site);
+const heroImage = "/images/dashboard-laptop.webp";
 
+const site = Astro.site!.href;
+const abs = (path: string) => new URL(path, Astro.site).href;
+
+// @id enlaza los nodos entre sí: Google los lee como una sola entidad "Passo"
+// en vez de tres fichas sueltas. Sin sameAs ni aggregateRating: no hay perfiles
+// sociales ni reseñas reales todavía, e inventarlos es penalizable.
 const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
         {
             "@type": "Organization",
+            "@id": `${site}#organization`,
             name: "Passo",
-            url: Astro.site?.href,
-            logo: new URL("/android-chrome-512x512.png", Astro.site).href,
+            url: site,
+            logo: {
+                "@type": "ImageObject",
+                url: abs("/android-chrome-512x512.png"),
+                width: 512,
+                height: 512,
+            },
+            image: ogImage.href,
             slogan: "Toda transformación comienza con un paso.",
+            description:
+                "Passo desarrolla software de gestión para academias de baile: pagos, asistencia, calendario de clases y seguimiento del progreso de los alumnos.",
             email: "hola@passo.app",
+            knowsLanguage: "es",
+            contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                email: "hola@passo.app",
+                availableLanguage: ["Spanish"],
+            },
+        },
+        {
+            "@type": "WebSite",
+            "@id": `${site}#website`,
+            url: site,
+            name: "Passo",
+            description,
+            inLanguage: "es",
+            publisher: { "@id": `${site}#organization` },
         },
         {
             "@type": "SoftwareApplication",
+            "@id": `${site}#software`,
             name: "Passo",
+            url: site,
             description:
                 "Plataforma de gestión para academias de baile: control de pagos, asistencia, calendario de clases y seguimiento del progreso de los alumnos.",
             applicationCategory: "BusinessApplication",
+            applicationSubCategory: "Software de gestión para academias de baile",
             operatingSystem: "Web, iOS, Android",
             inLanguage: "es",
+            image: ogImage.href,
+            screenshot: ogImage.href,
+            publisher: { "@id": `${site}#organization` },
+            featureList: [
+                "Control de pagos y cobros recurrentes",
+                "Registro de asistencia por clase",
+                "Calendario de clases y horarios",
+                "Seguimiento del progreso de los alumnos",
+                "App para alumnos en iOS y Android",
+            ],
             offers: [
                 {
                     "@type": "Offer",
                     name: "Plan Demo",
                     price: "0",
                     priceCurrency: "USD",
+                    description: "Prueba gratuita de 30 días",
+                    url: site,
+                    availability: "https://schema.org/InStock",
                 },
                 {
                     "@type": "Offer",
@@ -46,6 +95,8 @@ const jsonLd = {
                     price: "1.00",
                     priceCurrency: "USD",
                     description: "Por alumno activo al mes",
+                    url: site,
+                    availability: "https://schema.org/InStock",
                 },
                 {
                     "@type": "Offer",
@@ -53,6 +104,8 @@ const jsonLd = {
                     price: "2.00",
                     priceCurrency: "USD",
                     description: "Por alumno activo al mes, con reportes personalizados",
+                    url: site,
+                    availability: "https://schema.org/InStock",
                 },
             ],
         },
@@ -67,7 +120,10 @@ const jsonLd = {
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <meta
+            name="robots"
+            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
         <link rel="canonical" href={canonical} />
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -84,6 +140,9 @@ const jsonLd = {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         <meta property="og:image" content={ogImage} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1750" />
+        <meta property="og:image:height" content="1750" />
         <meta property="og:image:alt" content="Panel de control de Passo para academias de baile" />
 
         <!-- Twitter -->
@@ -91,6 +150,10 @@ const jsonLd = {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content="Panel de control de Passo para academias de baile" />
+
+        <!-- LCP: la imagen del hero se descubre antes de que React hidrate -->
+        <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

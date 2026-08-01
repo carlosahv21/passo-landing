@@ -91,13 +91,18 @@ const Hero = () => {
                     >
                         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[75%] h-44 bg-azul/15 blur-[110px] -z-10"></div>
                         <img
-                            alt="Panel de control de Passo para academias de baile"
+                            alt="Panel de control de Passo mostrando ingresos, alumnos activos y asistencias de una academia de baile"
                             fetchPriority="high"
+                            width={1750}
+                            height={1750}
                             className="w-[108%] max-w-none -ml-8"
                             src="/images/dashboard-laptop.webp"
                         />
                         <img
-                            alt="App móvil de Passo mostrando una clase de salsa"
+                            alt="App móvil de Passo con el horario de clases y el progreso del alumno"
+                            width={1625}
+                            height={1625}
+                            decoding="async"
                             className="absolute -bottom-0 -right-20 w-[65%] drop-shadow-2xl"
                             src="/images/mobile-app-iso.webp"
                         />

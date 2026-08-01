@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="grid md:grid-cols-4 gap-16 mb-20">
                     <div className="col-span-1 md:col-span-2">
                         <div className="flex items-center gap-3 mb-6">
-                            <img src="/images/logo-passo.webp" alt="" className="h-10 w-auto" />
+                            <img src="/images/logo-passo.webp" alt="" width={355} height={512} className="h-10 w-auto" />
                             <span className="font-display text-3xl font-semibold tracking-tight text-claro">Passo</span>
                         </div>
                         <p className="font-display italic text-xl text-claro/70 mb-6">
@@ -29,7 +29,7 @@ const Footer = () => {
                         </div>
                     </div>
                     <div>
-                        <h5 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Producto</h5>
+                        <h2 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Producto</h2>
                         <ul className="space-y-4 text-sm text-claro/50">
                             <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('producto')?.scrollIntoView({ behavior: 'smooth' })}>Producto</button></li>
                             <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>Precios</button></li>
@@ -37,7 +37,7 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div>
-                        <h5 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Compañía</h5>
+                        <h2 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Compañía</h2>
                         <ul className="space-y-4 text-sm text-claro/50">
                             <li><button className="hover:text-claro transition-colors text-left" onClick={() => useModalStore.getState().openModal('about')}>Sobre nosotros</button></li>
                             <li><button className="hover:text-claro transition-colors text-left" onClick={() => useModalStore.getState().openModal('contact')}>Contacto</button></li>

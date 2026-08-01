@@ -54,6 +54,8 @@ const Producto = () => {
                         <img
                             src="/images/dashboard-laptop.webp"
                             alt="Dashboard de Passo con ingresos, alumnos activos y asistencias"
+                            width={1750}
+                            height={1750}
                             loading="lazy"
                             decoding="async"
                             className="w-full transition-transform duration-500 hover:scale-[1.02]"
