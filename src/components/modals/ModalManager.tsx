@@ -5,6 +5,8 @@ import RegistroModal from './RegistroModal';
 import VideoModal from './VideoModal';
 import { Users, ShieldCheck, FileText, Lock, Globe, Cookie, MessageCircle, Mail, ArrowRight } from 'lucide-react';
 
+const WHATSAPP_URL = import.meta.env.PUBLIC_WHATSAPP_URL;
+
 const ModalManager: React.FC = () => {
     const { activeModal, closeModal } = useModalStore();
     const [legalTab, setLegalTab] = useState<'privacy' | 'terms' | 'cookies'>('privacy');
@@ -152,7 +154,7 @@ const ModalManager: React.FC = () => {
 
                     <div className="grid grid-cols-1 gap-4">
                         <a
-                            href="https://wa.me/your-number"
+                            href={WHATSAPP_URL}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-between p-6 bg-[#25D366]/10 border border-[#25D366]/20 rounded-2xl hover:bg-[#25D366]/20 transition-all group"
@@ -170,7 +172,7 @@ const ModalManager: React.FC = () => {
                         </a>
 
                         <a
-                            href="mailto:hola@passo.app"
+                            href="mailto:contacto@passodance.com"
                             className="flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all group"
                         >
                             <div className="flex items-center gap-4">
@@ -179,7 +181,7 @@ const ModalManager: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-white font-bold">Correo Corporativo</h4>
-                                    <p className="text-sm text-slate-400 font-light">hola@passo.app</p>
+                                    <p className="text-sm text-slate-400 font-light">contacto@passodance.com</p>
                                 </div>
                             </div>
                             <ArrowRight size={20} className="text-slate-500 group-hover:translate-x-1 transition-transform" />

@@ -23,7 +23,7 @@ const Footer = () => {
                             <a aria-label="Instagram" className="w-11 h-11 rounded-full bg-pista border border-claro/10 flex items-center justify-center hover:border-azul transition-colors" href="#">
                                 <Instagram size={18} className="text-claro/60" />
                             </a>
-                            <a aria-label="Correo" className="w-11 h-11 rounded-full bg-pista border border-claro/10 flex items-center justify-center hover:border-azul transition-colors" href="mailto:hola@passo.app">
+                            <a aria-label="Correo" className="w-11 h-11 rounded-full bg-pista border border-claro/10 flex items-center justify-center hover:border-azul transition-colors" href="mailto:contacto@passodance.com">
                                 <Mail size={18} className="text-claro/60" />
                             </a>
                         </div>
