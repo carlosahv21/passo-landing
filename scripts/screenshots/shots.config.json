@@ -1,0 +1,132 @@
+{
+  "projectRoot": "../..",
+  "rawDir": "raw",
+  "outDir": "public/images/hero",
+  "web": {
+    "baseUrl": "http://localhost:3000",
+    "viewport": {
+      "width": 1440,
+      "height": 922
+    },
+    "deviceScaleFactor": 2,
+    "login": {
+      "path": "/",
+      "emailEnv": "PASSO_DEMO_EMAIL",
+      "passwordEnv": "PASSO_DEMO_PASSWORD"
+    },
+    "hideSelectors": [
+      "#webpack-dev-server-client-overlay",
+      ".ant-message",
+      ".ant-notification",
+      ".Toastify"
+    ],
+    "settleMs": 2500,
+    "apiUrl": "http://localhost:8000/api"
+  },
+  "android": {
+    "cropTop": 0,
+    "cropBottom": 0,
+    "_nota": "cropTop/cropBottom en px: alto de la barra de estado y de la barra de navegación de tu Android. capture-android.sh los detecta y los imprime; cópialos aquí."
+  },
+  "slides": [
+    {
+      "id": "kpis",
+      "label": "KPIs en tiempo real",
+      "web": {
+        "file": "1-kpis-web.png",
+        "path": "/",
+        "element": {
+          "selector": ".ant-row",
+          "text": "Estudiantes Activos",
+          "pick": "last",
+          "padding": 16,
+          "style": {
+            "width": "880px",
+            "flexWrap": "wrap"
+          },
+          "childStyle": {
+            "flex": "0 0 50%",
+            "maxWidth": "50%"
+          }
+        }
+      },
+      "app": {
+        "file": "1-kpis-app.png",
+        "screen": "Dashboard (sesión de admin)"
+      },
+      "alt": {
+        "laptop": "Dashboard de Passo con los KPIs de la academia: ingresos, alumnos activos y asistencias",
+        "phone": "App móvil de Passo con el resumen de la academia para el administrador"
+      }
+    },
+    {
+      "id": "notificaciones",
+      "label": "Notificaciones",
+      "web": {
+        "file": "2-notificaciones-web.png",
+        "path": "/notifications",
+        "element": {
+          "selector": ".ant-list-item .ant-card",
+          "text": "Pago recibido",
+          "hide": [
+            ".ant-list-item .ant-card .ant-space"
+          ],
+          "padding": 16,
+          "style": {
+            "maxWidth": "720px"
+          }
+        }
+      },
+      "app": {
+        "file": "2-notificaciones-app.png",
+        "screen": "Notificaciones"
+      },
+      "alt": {
+        "laptop": "Centro de notificaciones de Passo en la web",
+        "phone": "Notificaciones de Passo en la app móvil"
+      }
+    },
+    {
+      "id": "gamificacion",
+      "label": "Gamificación",
+      "web": {
+        "file": "3-gamificacion-web.png",
+        "path": "/students/{topStudent}/profile?tab=achievements",
+        "element": {
+          "selector": ".ant-card:has(.ant-segmented)",
+          "text": "Logros",
+          "padding": 16,
+          "remove": [
+            ".ant-card-body div:not(.ant-card-extra):has(> .ant-segmented)"
+          ]
+        }
+      },
+      "app": {
+        "file": "3-gamificacion-app.png",
+        "screen": "Progreso del alumno (ProgressHub, sesión de alumno)"
+      },
+      "alt": {
+        "laptop": "Logros desbloqueados por un alumno en su perfil de Passo",
+        "phone": "Progreso, puntos y logros del alumno en la app de Passo"
+      }
+    },
+    {
+      "id": "landing",
+      "label": "Tu landing de academia",
+      "web": {
+        "file": "4-landing-web.png",
+        "export": "Mockup del diseño, versión escritorio"
+      },
+      "app": {
+        "file": "4-landing-app.png",
+        "export": "Mockup del diseño, versión celular",
+        "cropTop": 0,
+        "cropBottom": 0
+      },
+      "alt": {
+        "laptop": "Landing page de una academia de baile creada con Passo",
+        "phone": "Landing page de una academia de baile vista desde el celular"
+      }
+    }
+  ]
+}

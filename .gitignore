@@ -29,3 +29,9 @@ Thumbs.db
 # agent skills (regenerables desde skills-lock.json)
 .agents/
 .claude/
+
+# Pantallazos crudos del carrusel
+scripts/screenshots/raw/
+
+# CSS de Ant Design (lo genera scripts/antd-css.mjs en predev/prebuild)
+src/styles/antd.css

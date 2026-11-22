@@ -1,0 +1,59 @@
+{
+  "hashed": false,
+  "cssVar": {
+    "key": "passo"
+  },
+  "token": {
+    "fontFamily": "'Inter', system-ui, sans-serif",
+    "fontSize": 15,
+    "colorPrimary": "#0A84FF",
+    "colorInfo": "#0A84FF",
+    "colorWarning": "#F2B33D",
+    "colorSuccess": "#22A06B",
+    "colorText": "#1D2433",
+    "colorTextSecondary": "#5F6B7A",
+    "colorTextTertiary": "#8A94A3",
+    "colorBgLayout": "#F4F7FB",
+    "colorBgContainer": "#FFFFFF",
+    "colorBorder": "#E3E8EF",
+    "colorBorderSecondary": "#EDF1F6",
+    "borderRadius": 10,
+    "borderRadiusLG": 20,
+    "controlHeightLG": 50,
+    "boxShadowTertiary": "0 1px 2px rgba(29, 36, 51, 0.04), 0 8px 24px rgba(29, 36, 51, 0.06)"
+  },
+  "components": {
+    "Button": {
+      "fontWeight": 600,
+      "primaryShadow": "0 8px 20px rgba(10, 132, 255, 0.28)",
+      "contentFontSizeLG": 16,
+      "paddingInlineLG": 28,
+      "borderRadius": 10,
+      "borderRadiusLG": 12,
+      "borderRadiusSM": 8
+    },
+    "Card": {
+      "paddingLG": 28
+    },
+    "Segmented": {
+      "itemSelectedBg": "#0A84FF",
+      "itemSelectedColor": "#FFFFFF",
+      "trackBg": "#EAF0F7",
+      "trackPadding": 4,
+      "borderRadius": 10,
+      "borderRadiusLG": 12,
+      "borderRadiusSM": 8
+    },
+    "Slider": {
+      "railSize": 6,
+      "handleSize": 14,
+      "handleSizeHover": 16
+    },
+    "Tag": {
+      "defaultBg": "#F4F7FB"
+    },
+    "Modal": {
+      "titleFontSize": 20
+    }
+  }
+}

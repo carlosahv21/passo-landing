@@ -1,0 +1,42 @@
+{
+  "laptop": {
+    "frame": "laptop-frame.png",
+    "mask": "laptop-screen-mask.png",
+    "size": [
+      1750,
+      1750
+    ],
+    "rect": [
+      175,
+      377,
+      1575,
+      1274
+    ]
+  },
+  "phone": {
+    "frame": "phone-frame.png",
+    "mask": "phone-screen-mask.png",
+    "size": [
+      1625,
+      1625
+    ],
+    "quad": [
+      [
+        775.7,
+        11.7
+      ],
+      [
+        1440.5,
+        107.1
+      ],
+      [
+        831.6,
+        1572.4
+      ],
+      [
+        154.5,
+        1453.7
+      ]
+    ]
+  }
+}
