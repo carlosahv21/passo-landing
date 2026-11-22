@@ -6,37 +6,38 @@ Landing page de **Passo**, la plataforma de gestión para academias de baile: pa
 
 ## Secciones
 
-- **Hero**: slogan de marca + foto de bailarina + mockup del dashboard.
+- **Hero**: banda azul con borde diagonal, titular centrado, panel web + celular con tarjetas flotantes y dos notas a mano; franja "Hecho para academias de baile".
 - **Retos**: pagos desordenados, asistencias dispersas, deserción invisible → "Passo organiza todo eso."
 - **Producto** (`#producto`): gestiona, analiza y haz crecer tu academia.
 - **App alumnos** (`#alumnos`): mockup de teléfono (racha, QR, progreso) hecho en HTML/CSS.
 - **Para quién** (`#para-quien`): Academias / Profesores / Alumnos.
 - **Manifiesto**: "El baile conecta personas. El baile transforma vidas."
-- **Calculadora** (`#calculadora`): alumnos a retener según plan y mensualidad.
-- **Precios** (`#pricing`): Demo / Básico / Pro por alumno en COP (TRM viva).
+- **Calculadora** (`#calculadora`): alumnos a retener según alumnos activos, tipo (Básico/Pro) y mensualidad.
+- **Precios** (`#pricing`): planes Estudio / Academia / Compañía por alumnos activos, cada uno con funcionalidades Básicas o Pro (precios fijos en COP en `src/lib/planes.ts`). La Demo no es un plan: son 30 días gratis con funcionalidades Pro en cualquier plan.
 - **CTA final**: "¿Listo para dar el siguiente paso?"
-- Rastro decorativo de huellas azul/oro por el margen izquierdo (`HuellaTrail.tsx`).
 
-## Imágenes pendientes de subir
+## Ilustraciones
 
-Los slots con gradiente (`MediaSlot.tsx`) esperan estos archivos en `public/images/`;
-al subirlos, reemplazar el `<MediaSlot>` correspondiente por un `<img>`:
-
-- `hero-dancer.png` — bailarina del hero
-- `quien-academias.jpg`, `quien-profesores.jpg`, `quien-alumnos.jpg` — cards "Para quién"
+Las imágenes de la landing (panel web, celulares, tarjetas de "Para quién") están hechas con
+componentes de Ant Design y datos de ejemplo, sobre las formas de fondo de `ui/Formas.tsx`.
+No hay fotos pendientes por subir.
 
 ## Identidad
 
-- Paleta "noche eléctrica": `noche` `#0E1116`, `claro` `#E8EDF4`, `azul` `#0A84FF`, `oro` `#F2B33D`, `cielo` `#4DA3FF` (definida en `tailwind.config.mjs`).
-- Tipografía: Fraunces (display), Figtree (cuerpo), Space Grotesk (etiquetas y números).
-- Símbolo: la huella (`src/components/Huella.tsx`), usada como logo, checks y rastro de fondo.
+- Mismo lenguaje visual que el dashboard de Passo en modo claro: azul `#0A84FF`, fuente Inter y
+  componentes de [Ant Design](https://ant.design/components/) (tema en `src/lib/antd-theme.json`).
+- Paleta en `tailwind.config.mjs`: `tinta` `#1D2433`, `gris` `#5F6B7A`, `fondo` `#F4F7FB`, `linea` `#E3E8EF`, `azul` `#0A84FF`, `oro` `#F2B33D`.
+- Anotaciones a mano (Caveat) solo en el Hero. Símbolo: la huella (`src/components/Huella.tsx`).
+- Cada isla se envuelve con `withAntd` (`src/lib/antd.tsx`). `scripts/antd-css.mjs` genera
+  `src/styles/antd.css` antes de `dev`/`build` para que la página no se vea sin estilos antes de hidratar;
+  si usas un componente nuevo de Ant Design, agrégalo a su lista `includes`.
 
 ## Tech Stack
 
 - [Astro](https://astro.build/) + [React](https://react.dev/) (islands con `client:load` / `client:visible`)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Framer Motion](https://www.framer.com/motion/) — animaciones (respeta `prefers-reduced-motion`)
-- [Lucide React](https://lucide.dev/) — iconos
+- [Ant Design](https://ant.design/) + `@ant-design/icons` — componentes e iconos
 - [Zustand](https://zustand-demo.pmnd.rs/) — estado de modales
 
 ## Comandos

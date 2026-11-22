@@ -6,35 +6,128 @@
     html {
         max-width: 100%;
         overflow-x: hidden;
+        scroll-padding-top: 96px;
     }
     body {
-        @apply bg-noche text-claro font-sans antialiased overflow-x-hidden;
+        @apply bg-fondo text-tinta font-sans antialiased overflow-x-hidden;
         max-width: 100vw;
+        font-feature-settings: "cv11", "ss01";
     }
     h1,
     h2,
     h3,
     h4 {
-        @apply font-display font-semibold tracking-tight;
+        @apply font-bold tracking-tight text-tinta;
     }
     ::selection {
-        @apply bg-azul text-claro;
+        @apply bg-azul text-white;
     }
     :focus-visible {
-        outline: 2px solid #f2b33d;
+        outline: 2px solid #0a84ff;
         outline-offset: 3px;
     }
 }
 
-/* Resplandor de luz de escenario en el hero */
-.stage-glow {
-    background:
-        radial-gradient(ellipse 60% 45% at 75% 20%, rgba(242, 179, 61, 0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 55% 50% at 20% 80%, rgba(10, 132, 255, 0.10) 0%, transparent 70%);
+@layer components {
+    /* Ancho de página: casi todo el ancho en pantallas grandes, con márgenes cómodos */
+    .contenedor {
+        @apply w-full max-w-[1400px] mx-auto px-5 md:px-8 lg:px-12;
+    }
+
+    /* Escala tipográfica única para toda la landing */
+    .t-hero {
+        font-size: clamp(2.25rem, 4vw, 3.25rem);
+        line-height: 1.07;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+    }
+    .t-h2 {
+        font-size: clamp(1.9rem, 3vw, 2.6rem);
+        line-height: 1.12;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+    }
+    /* Cita de la marca (Manifiesto): título de sección, pero a lo ancho de la página */
+    .t-cita {
+        font-size: clamp(1.9rem, 3.25vw, 3.2rem);
+        line-height: 1.15;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+    }
+    .t-h3 {
+        font-size: clamp(1.45rem, 2vw, 1.75rem);
+        line-height: 1.2;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+    .t-card {
+        font-size: 1.2rem;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+    .t-lead {
+        font-size: 1.0625rem;
+        line-height: 1.7;
+    }
+    @media (min-width: 768px) {
+        .t-lead {
+            font-size: 1.125rem;
+        }
+    }
+
+    /* Secciones: el fondo cambia para separar bloques de información */
+    .seccion {
+        @apply relative py-16 md:py-24;
+    }
+    .seccion-blanca {
+        @apply bg-white;
+    }
+    .seccion-azul {
+        @apply text-white;
+        background:
+            radial-gradient(ellipse 50% 60% at 90% 10%, rgba(77, 163, 255, 0.5) 0%, transparent 60%),
+            radial-gradient(ellipse 45% 55% at 0% 90%, rgba(0, 82, 180, 0.45) 0%, transparent 65%),
+            linear-gradient(160deg, #0A84FF 0%, #0066D6 100%);
+        clip-path: polygon(0 3%, 38% 0, 100% 2.5%, 100% 97%, 62% 100%, 0 97.5%);
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+    }
+    .seccion-azul h2,
+    .seccion-azul h3 {
+        color: #fff;
+    }
 }
 
-.nav-blur {
-    backdrop-filter: blur(12px);
-    background-color: rgba(14, 17, 22, 0.8);
-    border-bottom: 1px solid rgba(232, 237, 244, 0.08);
+/* Panel azul con onda del Hero (equivalente a la ola lavanda de la referencia) */
+.hero-ola {
+    background:
+        radial-gradient(ellipse 70% 90% at 85% 10%, rgba(77, 163, 255, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 10% 100%, rgba(10, 132, 255, 0.28) 0%, transparent 60%),
+        linear-gradient(180deg, #EAF4FF 0%, #D6E9FF 100%);
+}
+
+/* Banda azul del Hero: borde inferior en diagonal irregular (como la referencia) */
+.hero-banda {
+    background:
+        radial-gradient(ellipse 60% 70% at 85% 0%, rgba(77, 163, 255, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 0% 60%, rgba(0, 82, 180, 0.45) 0%, transparent 65%),
+        linear-gradient(160deg, #0A84FF 0%, #0066D6 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
+}
+@media (min-width: 768px) {
+    .hero-banda {
+        clip-path: polygon(0 0, 100% 0, 100% 80%, 74% 84%, 44% 90%, 0 100%);
+    }
+}
+
+/* Puntos decorativos (esquina del Hero) */
+.puntos {
+    background-image: radial-gradient(rgba(10, 132, 255, 0.35) 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+}
+
+/* Las islas de Ant Design heredan Inter y el color del texto */
+.ant-typography {
+    color: inherit;
 }

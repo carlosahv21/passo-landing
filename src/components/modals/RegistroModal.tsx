@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Alert, Button, Form, Input } from 'antd';
 import InfoModal from './InfoModal';
 import Huella from '../Huella';
 
@@ -12,34 +12,22 @@ interface RegistroModalProps {
     onClose: () => void;
 }
 
-const campoBase =
-    'w-full px-4 py-3 rounded-xl bg-noche border border-claro/15 text-claro placeholder:text-claro/30 focus:border-azul focus:outline-none transition-colors text-sm';
+interface Valores {
+    academyName: string;
+    address?: string;
+    logoUrl?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
 
 const RegistroModal: React.FC<RegistroModalProps> = ({ isOpen, onClose }) => {
-    const [form, setForm] = useState({
-        academyName: '',
-        address: '',
-        logoUrl: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-    });
     const [enviando, setEnviando] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const set = (campo: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
-        setForm((f) => ({ ...f, [campo]: e.target.value }));
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onFinish = async (v: Valores) => {
         setError(null);
-
-        if (form.password.length < 8) {
-            setError('La contraseña debe tener al menos 8 caracteres.');
-            return;
-        }
-
         setEnviando(true);
         try {
             const res = await fetch(API_REGISTER_URL, {
@@ -47,15 +35,15 @@ const RegistroModal: React.FC<RegistroModalProps> = ({ isOpen, onClose }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     academy: {
-                        name: form.academyName,
-                        ...(form.address && { address: form.address }),
-                        ...(form.logoUrl && { logo_url: form.logoUrl }),
+                        name: v.academyName,
+                        ...(v.address && { address: v.address }),
+                        ...(v.logoUrl && { logo_url: v.logoUrl }),
                     },
                     user: {
-                        first_name: form.firstName,
-                        last_name: form.lastName,
-                        email: form.email,
-                        password: form.password,
+                        first_name: v.firstName,
+                        last_name: v.lastName,
+                        email: v.email,
+                        password: v.password,
                     },
                 }),
             });
@@ -71,49 +59,55 @@ const RegistroModal: React.FC<RegistroModalProps> = ({ isOpen, onClose }) => {
     };
 
     return (
-        <InfoModal
-            isOpen={isOpen}
-            onClose={onClose}
-            title="Da el primer paso"
-            icon={<Huella size={16} rotate={12} />}
-        >
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate={false}>
-                <p className="text-sm text-claro/60">
-                    Crea tu academia en Passo y pruébala gratis por 30 días. Sin tarjeta de crédito.
-                </p>
+        <InfoModal isOpen={isOpen} onClose={onClose} title="Da el primer paso" icon={<Huella size={9} rotate={12} />} width={560}>
+            <p className="mb-5 text-[14px]">Crea tu academia y pruébala gratis por 30 días con todas las funciones Pro. Sin tarjeta de crédito o débito.</p>
 
-                <fieldset className="space-y-4">
-                    <legend className="font-mono text-xs uppercase tracking-[0.2em] text-oro mb-3">Tu academia</legend>
-                    <input required placeholder="Nombre de tu academia" value={form.academyName} onChange={set('academyName')} className={campoBase} />
-                    <input placeholder="Dirección física (opcional)" value={form.address} onChange={set('address')} className={campoBase} />
-                    <input type="url" placeholder="URL de tu logo (opcional)" value={form.logoUrl} onChange={set('logoUrl')} className={campoBase} />
-                </fieldset>
+            <Form<Valores> layout="vertical" requiredMark={false} onFinish={onFinish} className="[&_.ant-form-item]:!mb-3.5">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-azul mb-2">Tu academia</p>
+                <Form.Item name="academyName" rules={[{ required: true, message: 'Escribe el nombre de tu academia' }]}>
+                    <Input placeholder="Nombre de tu academia" />
+                </Form.Item>
+                <Form.Item name="address">
+                    <Input placeholder="Dirección física (opcional)" />
+                </Form.Item>
+                <Form.Item name="logoUrl" rules={[{ type: 'url', message: 'Escribe una URL válida' }]}>
+                    <Input placeholder="URL de tu logo (opcional)" />
+                </Form.Item>
 
-                <fieldset className="space-y-4">
-                    <legend className="font-mono text-xs uppercase tracking-[0.2em] text-oro mb-3">Tus datos</legend>
-                    <div className="grid grid-cols-2 gap-4">
-                        <input required placeholder="Nombre" value={form.firstName} onChange={set('firstName')} className={campoBase} />
-                        <input required placeholder="Apellido" value={form.lastName} onChange={set('lastName')} className={campoBase} />
-                    </div>
-                    <input required type="email" placeholder="correo@academia.com" value={form.email} onChange={set('email')} className={campoBase} />
-                    <input required type="password" minLength={8} placeholder="Contraseña (mínimo 8 caracteres)" value={form.password} onChange={set('password')} className={campoBase} autoComplete="new-password" />
-                </fieldset>
-
-                {error && (
-                    <p role="alert" className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">
-                        {error}
-                    </p>
-                )}
-
-                <button
-                    type="submit"
-                    disabled={enviando}
-                    className="w-full py-4 rounded-full bg-azul hover:brightness-110 transition-all font-bold text-sm text-claro shadow-lg shadow-azul/25 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-azul mb-2 mt-4">Tus datos</p>
+                <div className="grid grid-cols-2 gap-x-4">
+                    <Form.Item name="firstName" rules={[{ required: true, message: 'Escribe tu nombre' }]}>
+                        <Input placeholder="Nombre" autoComplete="given-name" />
+                    </Form.Item>
+                    <Form.Item name="lastName" rules={[{ required: true, message: 'Escribe tu apellido' }]}>
+                        <Input placeholder="Apellido" autoComplete="family-name" />
+                    </Form.Item>
+                </div>
+                <Form.Item
+                    name="email"
+                    rules={[
+                        { required: true, message: 'Escribe tu correo' },
+                        { type: 'email', message: 'Escribe un correo válido' },
+                    ]}
                 >
-                    {enviando && <Loader2 size={16} className="animate-spin" />}
-                    {enviando ? 'Creando tu academia…' : 'Crear mi academia — 30 días gratis'}
-                </button>
-            </form>
+                    <Input placeholder="correo@academia.com" autoComplete="email" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                        { required: true, message: 'Crea una contraseña' },
+                        { min: 8, message: 'La contraseña debe tener al menos 8 caracteres.' },
+                    ]}
+                >
+                    <Input.Password placeholder="Contraseña (mínimo 8 caracteres)" autoComplete="new-password" />
+                </Form.Item>
+
+                {error && <Alert type="error" showIcon message={error} className="!mb-5" />}
+
+                <Button type="primary" htmlType="submit" size="large" block loading={enviando} className="!mt-2">
+                    {enviando ? 'Preparando tu academia…' : 'Empezar mi prueba gratis'}
+                </Button>
+            </Form>
         </InfoModal>
     );
 };

@@ -1,12 +1,14 @@
 import React from 'react';
 import Huella from './Huella';
 
-// Chip de sección, estilo referencia: píldora con huella + texto mono
+// Píldora de sección (como "Nos avantages" en la referencia): huella + texto
 const Eyebrow: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-    <p className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-pista border border-claro/10 font-mono text-[11px] uppercase tracking-[0.25em] text-oro ${className}`}>
-        <Huella size={9} rotate={16} />
+    <span
+        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-linea shadow-sm text-[13px] font-medium text-gris ${className}`}
+    >
+        <Huella size={8} rotate={16} className="text-azul" />
         {children}
-    </p>
+    </span>
 );
 
 export default Eyebrow;

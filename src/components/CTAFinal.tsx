@@ -1,62 +1,55 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { Button } from 'antd';
+import { MessageOutlined } from '@ant-design/icons';
 import { useModalStore } from '../store/modalStore';
+import { withAntd } from '../lib/antd';
+import Reveal from './ui/Reveal';
 import Huella from './Huella';
 
-const CTAFinal = () => {
+function CTAFinal() {
     return (
-        <section className="py-20 md:py-28 relative overflow-hidden">
-            {/* huella neón de fondo */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-                <Huella size={280} className="text-azul/[0.06] blur-[2px]" rotate={18} />
-            </div>
-
-            <div className="relative max-w-3xl mx-auto px-6 text-center">
-                <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="font-display text-4xl md:text-6xl text-claro leading-tight mb-6"
-                >
-                    ¿Listo para dar{' '}
-                    <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-azul to-cielo">
-                        el siguiente paso?
-                    </em>
-                </motion.h2>
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.15 }}
-                    viewport={{ once: true }}
-                    className="text-claro/60 text-lg mb-12 max-w-xl mx-auto"
-                >
-                    Prueba Passo gratis por 30 días y descubre todo lo que
-                    puede hacer por tu academia.
-                </motion.p>
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    viewport={{ once: true }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                >
-                    <button
-                        onClick={() => useModalStore.getState().openModal('registro')}
-                        className="bg-azul text-claro text-base font-bold px-10 py-4 rounded-full hover:brightness-110 hover:scale-[1.03] transition-all shadow-xl shadow-azul/25"
-                    >
-                        Prueba 30 días gratis
-                    </button>
-                    <button
-                        onClick={() => useModalStore.getState().openModal('contact')}
-                        className="text-claro/80 hover:text-claro font-semibold px-6 py-4 transition-colors"
-                    >
-                        Hablar con nosotros
-                    </button>
-                </motion.div>
+        <section className="seccion">
+            <div className="contenedor">
+                <Reveal>
+                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-azul to-[#0062CC] px-7 py-14 md:px-14 md:py-16 text-white">
+                        <svg className="absolute inset-x-0 bottom-0 w-full h-1/2" viewBox="0 0 1200 300" preserveAspectRatio="none" fill="white" aria-hidden="true">
+                            <path opacity="0.08" d="M0 160 C 260 60, 460 260, 760 140 S 1080 60, 1200 110 L1200 300 L0 300Z" />
+                            <path opacity="0.06" d="M0 230 C 300 150, 560 300, 860 210 S 1120 170, 1200 200 L1200 300 L0 300Z" />
+                        </svg>
+                        <Huella size={70} rotate={18} className="absolute right-[36%] -top-8 text-white/10" />
+                        <div className="relative grid lg:grid-cols-12 gap-8 items-center">
+                            <div className="lg:col-span-8">
+                                <h2 className="t-h2 !text-white">
+                                    ¿Listo para dar el siguiente paso?
+                                </h2>
+                                <p className="mt-4 t-lead text-white/85 max-w-2xl">
+                                    Prueba Passo gratis por 30 días con todas las funciones Pro y descubre todo lo que puede
+                                    hacer por tu academia.
+                                </p>
+                            </div>
+                            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 lg:items-end xl:items-center lg:justify-end">
+                                <Button
+                                    size="large"
+                                    className="!bg-white !text-azul !border-white !font-bold hover:!bg-white/90"
+                                    onClick={() => useModalStore.getState().openModal('registro')}
+                                >
+                                    Prueba 30 días gratis
+                                </Button>
+                                <Button
+                                    size="large"
+                                    ghost
+                                    icon={<MessageOutlined />}
+                                    onClick={() => useModalStore.getState().openModal('contact')}
+                                >
+                                    Habla con nosotros
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </Reveal>
             </div>
         </section>
     );
-};
+}
 
-export default CTAFinal;
+export default withAntd(CTAFinal);

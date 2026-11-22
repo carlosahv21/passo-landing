@@ -1,37 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-    darkMode: "class",
     theme: {
         extend: {
             colors: {
-                // Paleta Passo — "noche eléctrica"
-                "noche": "#0E1116",
-                "pista": "#161C24",
-                "claro": "#E8EDF4",
-                "azul": "#0A84FF",
-                "oro": "#F2B33D",
+                // Paleta Passo, modo claro del dashboard (apps/web/src/config/themeConfig.js)
+                "tinta": "#1D2433",     // texto principal
+                "gris": "#5F6B7A",      // texto secundario
+                "suave": "#8A94A3",     // texto terciario
+                "fondo": "#F4F7FB",     // canvas
+                "linea": "#E3E8EF",     // bordes
+                "azul": "#0A84FF",      // primario
+                "azul-suave": "#E8F3FF",
                 "cielo": "#4DA3FF",
-                // Aliases legacy (modales aún los usan) — mapeados a la nueva paleta
-                "background": "#0A0D12",
-                "primary-blue": "#0A84FF",
-                "bg-dark": "#0E1116",
-                "container-dark": "#161C24",
-                "text-base": "#E8EDF4",
-                "border-base": "#26303C",
+                "oro": "#F2B33D",
+                "verde": "#22A06B",
             },
             fontFamily: {
-                "sans": ["Figtree", "sans-serif"],
-                "display": ["Fraunces", "serif"],
-                "mono": ["Space Grotesk", "monospace"],
+                "sans": ["Inter", "system-ui", "sans-serif"],
+                "hand": ["Caveat", "cursive"],
             },
-            borderRadius: {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "2xl": "1rem",
-                "3xl": "1.5rem",
-                "full": "9999px"
+            boxShadow: {
+                "tarjeta": "0 1px 2px rgba(29, 36, 51, 0.04), 0 8px 24px rgba(29, 36, 51, 0.06)",
+                "flotante": "0 2px 6px rgba(29, 36, 51, 0.05), 0 24px 48px -12px rgba(29, 36, 51, 0.16)",
             },
         },
     },

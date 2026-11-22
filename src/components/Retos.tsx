@@ -1,73 +1,56 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Wallet, ClipboardList, TrendingDown } from 'lucide-react';
-import Eyebrow from './Eyebrow';
+import { Avatar, Card } from 'antd';
+import { WalletOutlined, ScheduleOutlined, FallOutlined } from '@ant-design/icons';
+import { withAntd } from '../lib/antd';
+import SeccionTitulo from './ui/SeccionTitulo';
+import Reveal from './ui/Reveal';
 
 const retos = [
     {
-        icon: Wallet,
+        icon: <WalletOutlined />,
+        color: '#F2B33D',
         title: 'Pagos desordenados',
-        description: 'Llevar el control de pagos manualmente genera errores y pérdida de tiempo.',
+        description: 'A mano generan errores y te quitan horas.',
     },
     {
-        icon: ClipboardList,
+        icon: <ScheduleOutlined />,
+        color: '#0A84FF',
         title: 'Asistencias en todos lados',
-        description: 'WhatsApp, hojas de cálculo y apuntes no te dan una visión clara.',
+        description: 'WhatsApp, Excel y apuntes, sin visión clara.',
     },
     {
-        icon: TrendingDown,
+        icon: <FallOutlined />,
+        color: '#FF7A45',
         title: 'No sabes quién deja de asistir',
-        description: 'Sin datos reales, es difícil tomar decisiones y hacer crecer tu academia.',
+        description: 'Sin datos es difícil actuar a tiempo.',
     },
 ];
 
-const Retos = () => {
+function Retos() {
     return (
-        <section className="py-20 md:py-28 relative" id="retos">
-            <div className="max-w-7xl mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <Eyebrow>Los retos de cada academia</Eyebrow>
-                </motion.div>
-
-                <div className="grid md:grid-cols-3 gap-8 mb-20">
-                    {retos.map((reto, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="flex items-start gap-5 p-8 rounded-3xl bg-pista border border-claro/10 hover:border-claro/25 transition-colors duration-300"
-                        >
-                            <span className="flex-shrink-0 w-12 h-12 rounded-2xl bg-azul/10 border border-azul/20 flex items-center justify-center">
-                                <reto.icon size={22} className="text-azul" strokeWidth={1.6} />
-                            </span>
-                            <div>
-                                <h3 className="font-display text-xl text-claro mb-2">{reto.title}</h3>
-                                <p className="text-claro/60 text-sm leading-relaxed">{reto.description}</p>
-                            </div>
-                        </motion.div>
+        <section className="seccion seccion-blanca" id="retos">
+            <div className="contenedor">
+                <SeccionTitulo
+                    eyebrow="Los retos de cada academia"
+                    titulo="Lo que hoy te quita tiempo,"
+                    resaltado="Passo lo organiza"
+                    bajada="Si hoy llevas tu academia entre cuadernos, WhatsApp y hojas de cálculo, esto te va a sonar conocido."
+                    unaLinea
+                />
+                <div className="mt-14 grid md:grid-cols-3 gap-6">
+                    {retos.map((r, i) => (
+                        <Reveal key={r.title} delay={i * 0.08}>
+                            <Card variant="borderless" className="h-full !rounded-3xl !bg-fondo text-center" styles={{ body: { padding: '32px 24px' } }}>
+                                <Avatar size={60} style={{ background: r.color, fontSize: 26, boxShadow: `0 10px 24px -8px ${r.color}` }} icon={r.icon} />
+                                <h3 className="mt-5 t-card xl:whitespace-nowrap">{r.title}</h3>
+                                <p className="mt-2 text-[15px] text-gris leading-relaxed xl:whitespace-nowrap">{r.description}</p>
+                            </Card>
+                        </Reveal>
                     ))}
                 </div>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    viewport={{ once: true }}
-                    className="text-center font-display text-3xl md:text-4xl text-claro"
-                >
-                    Passo organiza <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-azul to-cielo">todo eso.</em>
-                </motion.p>
             </div>
         </section>
     );
-};
+}
 
-export default Retos;
+export default withAntd(Retos);

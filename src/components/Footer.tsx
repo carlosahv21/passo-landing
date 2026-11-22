@@ -1,61 +1,67 @@
 import React from 'react';
-import { Instagram, Mail } from 'lucide-react';
+import { Button, Divider } from 'antd';
+import { InstagramOutlined, MailOutlined } from '@ant-design/icons';
 import { useModalStore } from '../store/modalStore';
+import { withAntd } from '../lib/antd';
+import Logo from './ui/Logo';
 
-const Footer = () => {
+const abrir = (m: 'about' | 'contact' | 'legal' | 'guarantee') => useModalStore.getState().openModal(m);
+const irA = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+const Enlace: React.FC<{ onClick: () => void; children: React.ReactNode }> = ({ onClick, children }) => (
+    <li>
+        <button onClick={onClick} className="text-gris hover:text-azul transition-colors text-left">
+            {children}
+        </button>
+    </li>
+);
+
+function Footer() {
     return (
-        <footer className="py-24 border-t border-claro/10 bg-[#0A0D12]">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid md:grid-cols-4 gap-16 mb-20">
-                    <div className="col-span-1 md:col-span-2">
-                        <div className="flex items-center gap-3 mb-6">
-                            <img src="/images/logo-passo.webp" alt="" width={355} height={512} className="h-10 w-auto" />
-                            <span className="font-display text-3xl font-semibold tracking-tight text-claro">Passo</span>
-                        </div>
-                        <p className="font-display italic text-xl text-claro/70 mb-6">
-                            Toda transformación comienza con un paso.
+        <footer className="bg-white border-t border-linea">
+            <div className="contenedor pt-16 pb-8">
+                <div className="grid md:grid-cols-4 gap-12">
+                    <div className="md:col-span-2">
+                        <Logo className="h-8" />
+                        <p className="mt-5 text-lg font-semibold text-tinta">Toda transformación comienza con un paso.</p>
+                        <p className="mt-3 max-w-sm text-gris leading-relaxed">
+                            Ayudamos a academias, profesores y alumnos a enfocarse en crecer, conectar y transformar vidas,
+                            mientras la tecnología organiza el camino.
                         </p>
-                        <p className="text-claro/40 max-w-sm mb-10 leading-relaxed">
-                            Ayudamos a academias, profesores y alumnos a enfocarse en crecer,
-                            conectar y transformar vidas, mientras la tecnología organiza el camino.
-                        </p>
-                        <div className="flex gap-4">
-                            <a aria-label="Instagram" className="w-11 h-11 rounded-full bg-pista border border-claro/10 flex items-center justify-center hover:border-azul transition-colors" href="#">
-                                <Instagram size={18} className="text-claro/60" />
-                            </a>
-                            <a aria-label="Correo" className="w-11 h-11 rounded-full bg-pista border border-claro/10 flex items-center justify-center hover:border-azul transition-colors" href="mailto:contacto@passodance.com">
-                                <Mail size={18} className="text-claro/60" />
-                            </a>
+                        <div className="mt-6 flex gap-2">
+                            <Button shape="circle" size="large" icon={<InstagramOutlined />} href="#" aria-label="Instagram" />
+                            <Button shape="circle" size="large" icon={<MailOutlined />} href="mailto:contacto@passodance.com" aria-label="Correo" />
                         </div>
                     </div>
                     <div>
-                        <h2 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Producto</h2>
-                        <ul className="space-y-4 text-sm text-claro/50">
-                            <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('producto')?.scrollIntoView({ behavior: 'smooth' })}>Producto</button></li>
-                            <li><button className="hover:text-claro transition-colors" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>Precios</button></li>
-                            <li><a className="hover:text-claro transition-colors" href="#">Próximamente</a></li>
+                        <h2 className="text-sm font-bold text-tinta mb-5">Producto</h2>
+                        <ul className="space-y-3 text-[15px]">
+                            <Enlace onClick={() => irA('producto')}>Producto</Enlace>
+                            <Enlace onClick={() => irA('alumnos')}>App alumnos</Enlace>
+                            <Enlace onClick={() => irA('pricing')}>Precios</Enlace>
                         </ul>
                     </div>
                     <div>
-                        <h2 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-claro mb-8">Compañía</h2>
-                        <ul className="space-y-4 text-sm text-claro/50">
-                            <li><button className="hover:text-claro transition-colors text-left" onClick={() => useModalStore.getState().openModal('about')}>Sobre nosotros</button></li>
-                            <li><button className="hover:text-claro transition-colors text-left" onClick={() => useModalStore.getState().openModal('contact')}>Contacto</button></li>
-                            <li><button className="hover:text-claro transition-colors text-left" onClick={() => useModalStore.getState().openModal('legal')}>Privacidad</button></li>
+                        <h2 className="text-sm font-bold text-tinta mb-5">Compañía</h2>
+                        <ul className="space-y-3 text-[15px]">
+                            <Enlace onClick={() => abrir('about')}>Sobre nosotros</Enlace>
+                            <Enlace onClick={() => abrir('contact')}>Contacto</Enlace>
+                            <Enlace onClick={() => abrir('legal')}>Privacidad</Enlace>
                         </ul>
                     </div>
                 </div>
-                <div className="pt-10 border-t border-claro/10 flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-[11px] font-bold text-claro/30 uppercase tracking-[0.2em]">
+                <Divider className="!my-10" />
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-suave">
                     <p>© {new Date().getFullYear()} Passo. Todos los derechos reservados.</p>
-                    <div className="flex gap-8">
-                        <button className="hover:text-claro/60 transition-colors uppercase" onClick={() => useModalStore.getState().openModal('legal')}>Términos</button>
-                        <button className="hover:text-claro/60 transition-colors uppercase" onClick={() => useModalStore.getState().openModal('legal')}>Cookies</button>
-                        <button className="hover:text-claro/60 transition-colors uppercase" onClick={() => useModalStore.getState().openModal('guarantee')}>Seguridad</button>
+                    <div className="flex gap-6">
+                        <button className="hover:text-azul transition-colors" onClick={() => abrir('legal')}>Términos</button>
+                        <button className="hover:text-azul transition-colors" onClick={() => abrir('legal')}>Cookies</button>
+                        <button className="hover:text-azul transition-colors" onClick={() => abrir('guarantee')}>Seguridad</button>
                     </div>
                 </div>
             </div>
         </footer>
     );
-};
+}
 
-export default Footer;
+export default withAntd(Footer);

@@ -1,141 +1,106 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { Card, Slider, Statistic } from 'antd';
+import { withAntd } from '../lib/antd';
 import Huella from './Huella';
-import { usePreciosCOP, fmtCOP } from '../lib/trm';
+import TipoToggle from './TipoToggle';
+import SeccionTitulo from './ui/SeccionTitulo';
+import Reveal from './ui/Reveal';
+import NotaMano from './ui/NotaMano';
+import { planPorAlumnos, fmtCOP, type Tipo } from '../lib/planes';
 
-const NOMBRES = { basico: 'Básico', pro: 'Pro' } as const;
+const Etiqueta: React.FC<{ htmlFor?: string; texto: string; valor?: React.ReactNode }> = ({ htmlFor, texto, valor }) => (
+    <label htmlFor={htmlFor} className="flex items-center justify-between text-[15px] font-semibold text-tinta mb-2">
+        {texto}
+        {valor !== undefined && <span className="text-azul font-bold">{valor}</span>}
+    </label>
+);
 
-const Calculadora = () => {
-    const precios = usePreciosCOP();
+function Calculadora() {
     const [alumnos, setAlumnos] = useState(80);
-    const [plan, setPlan] = useState<keyof typeof NOMBRES>('basico');
+    const [tipo, setTipo] = useState<Tipo>('basico');
     const [mensualidad, setMensualidad] = useState(110000);
 
-    const precioPlan = precios[plan];
-    const costoPasso = alumnos * precioPlan;
+    const plan = planPorAlumnos(alumnos);
+    const costoPasso = plan.precio[tipo];
     const alumnosARetener = Math.max(1, Math.ceil(costoPasso / mensualidad));
-    const porcentaje = ((precioPlan / mensualidad) * 100).toFixed(1);
+    const costoPorAlumno = Math.round(costoPasso / alumnos);
 
     return (
-        <section className="py-20 md:py-28 relative" id="calculadora">
-            <div className="max-w-7xl mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-14"
-                >
-                    <p className="font-mono text-xs uppercase tracking-[0.3em] text-oro mb-5">Calculadora Passo</p>
-                    <h2 className="font-display text-4xl md:text-5xl text-claro mb-5">
-                        ¿Cuántos alumnos paga Passo?
-                    </h2>
-                    <p className="text-claro/60 text-lg max-w-2xl mx-auto">
-                        Passo cuesta apenas una fracción de lo que cobras por alumno.
-                        Calcula cuántas mensualidades cubren la plataforma para toda tu academia.
-                    </p>
-                </motion.div>
+        <section className="seccion seccion-azul" id="calculadora">
+            <div className="contenedor">
+                <SeccionTitulo
+                    alinear="left"
+                    sobreAzul
+                    eyebrow="Calculadora Passo"
+                    titulo="¿Cuántos alumnos"
+                    resaltado="pagan Passo?"
+                    bajada="Passo cuesta una fracción de lo que cobras por alumno. Calcula cuántas mensualidades cubren la plataforma para toda tu academia."
+                />
 
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.15 }}
-                    viewport={{ once: true }}
-                    className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto"
-                >
-                    {/* Entradas */}
-                    <div className="p-9 rounded-3xl bg-pista border border-claro/10 space-y-8">
-                        <div>
-                            <label htmlFor="calc-alumnos" className="flex justify-between text-sm font-semibold text-claro mb-3">
-                                Alumnos de tu academia
-                                <span className="font-mono text-azul">{alumnos}</span>
-                            </label>
-                            <input
-                                id="calc-alumnos"
-                                type="range"
-                                min={10}
-                                max={500}
-                                step={5}
-                                value={alumnos}
-                                onChange={(e) => setAlumnos(Number(e.target.value))}
-                                className="w-full accent-azul"
-                            />
-                        </div>
+                <Reveal className="mt-12 relative">
+                    <Card variant="borderless" className="!rounded-3xl shadow-tarjeta" styles={{ body: { padding: 12 } }}>
+                        <div className="grid lg:grid-cols-12 gap-3">
+                            <div className="lg:col-span-7 p-6 md:p-10 space-y-9">
+                                <div>
+                                    <Etiqueta htmlFor="calc-alumnos" texto="Alumnos activos de tu academia" valor={alumnos} />
+                                    <Slider id="calc-alumnos" min={10} max={500} step={5} value={alumnos} onChange={setAlumnos} tooltip={{ open: false }} />
+                                    <p className="text-sm text-gris">
+                                        Tu plan: <span className="font-semibold text-tinta">{plan.nombre}</span> · {plan.alumnos.toLowerCase()}
+                                    </p>
+                                </div>
 
-                        <div>
-                            <span className="block text-sm font-semibold text-claro mb-3">Plan</span>
-                            <div className="grid grid-cols-2 gap-3">
-                                {(Object.keys(NOMBRES) as Array<keyof typeof NOMBRES>).map((key) => (
-                                    <button
-                                        key={key}
-                                        onClick={() => setPlan(key)}
-                                        aria-pressed={plan === key}
-                                        className={`py-3 px-4 rounded-2xl border text-sm font-bold transition-colors ${
-                                            plan === key
-                                                ? 'border-azul bg-azul/10 text-claro'
-                                                : 'border-claro/15 text-claro/60 hover:border-claro/30'
-                                        }`}
-                                    >
-                                        {NOMBRES[key]}
-                                        <span className="block font-mono text-xs font-normal mt-1 text-claro/50">
-                                            {fmtCOP.format(precios[key])}/alumno
-                                        </span>
-                                    </button>
-                                ))}
+                                <div>
+                                    <Etiqueta texto="Funcionalidades" />
+                                    <TipoToggle tipo={tipo} onChange={setTipo} block />
+                                    <p className="mt-2 text-sm text-gris">
+                                        {plan.nombre} Básico {fmtCOP.format(plan.precio.basico)} · {plan.nombre} Pro {fmtCOP.format(plan.precio.pro)} al mes
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <Etiqueta htmlFor="calc-mensualidad" texto="Tu mensualidad por alumno" valor={fmtCOP.format(mensualidad)} />
+                                    <Slider
+                                        id="calc-mensualidad"
+                                        min={80000}
+                                        max={200000}
+                                        step={5000}
+                                        value={mensualidad}
+                                        onChange={setMensualidad}
+                                        tooltip={{ open: false }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="relative lg:col-span-5 hero-ola rounded-2xl p-8 md:p-10 flex flex-col justify-center">
+                                <NotaMano flecha="abajo-izquierda" className="absolute right-8 top-6 hidden xl:block">
+                                    Haz la cuenta
+                                </NotaMano>
+                                <div className="flex gap-2 text-azul mb-4" aria-hidden="true">
+                                    {Array.from({ length: Math.min(alumnosARetener, 6) }, (_, i) => (
+                                        <Huella key={i} size={10} flip={i % 2 === 0} rotate={i % 2 === 0 ? -12 : 12} />
+                                    ))}
+                                </div>
+                                <p className="text-[88px] font-extrabold leading-none tracking-[-0.04em] text-azul">{alumnosARetener}</p>
+                                <p className="mt-3 text-lg text-tinta">
+                                    {alumnosARetener === 1 ? 'alumno paga' : 'alumnos pagan'} Passo para{' '}
+                                    <span className="font-semibold">toda tu academia</span>
+                                </p>
+                                <div className="mt-8 grid grid-cols-2 gap-3 text-left">
+                                    <Card size="small" variant="borderless" className="!rounded-2xl">
+                                        <Statistic title="Costo mensual Passo" value={fmtCOP.format(costoPasso)} styles={{ content: { fontSize: 20, fontWeight: 700 } }} />
+                                    </Card>
+                                    <Card size="small" variant="borderless" className="!rounded-2xl">
+                                        <Statistic title="Por alumno activo" value={fmtCOP.format(costoPorAlumno)} styles={{ content: { fontSize: 20, fontWeight: 700 } }} />
+                                    </Card>
+                                </div>
+                                <p className="mt-6 text-sm text-gris">Con la mensualidad de 1 a 3 alumnos, Passo queda pagado para toda tu academia.</p>
                             </div>
                         </div>
-
-                        <div>
-                            <label htmlFor="calc-mensualidad" className="flex justify-between text-sm font-semibold text-claro mb-3">
-                                Tu mensualidad por alumno
-                                <span className="font-mono text-azul">{fmtCOP.format(mensualidad)}</span>
-                            </label>
-                            <input
-                                id="calc-mensualidad"
-                                type="range"
-                                min={80000}
-                                max={200000}
-                                step={5000}
-                                value={mensualidad}
-                                onChange={(e) => setMensualidad(Number(e.target.value))}
-                                className="w-full accent-azul"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Resultado */}
-                    {/* fondo sólido (mezcla noche+azul): translúcido dejaba ver las huellas del fondo */}
-                    <div className="p-9 rounded-3xl bg-[#0E1926] border border-azul/25 flex flex-col justify-center text-center">
-                        <div className="flex justify-center gap-2 mb-6 text-azul" aria-hidden="true">
-                            {Array.from({ length: Math.min(alumnosARetener, 6) }, (_, i) => (
-                                <Huella key={i} size={16} flip={i % 2 === 0} rotate={i % 2 === 0 ? -12 : 12} />
-                            ))}
-                        </div>
-                        <p className="font-display text-6xl md:text-7xl text-claro mb-2">
-                            {alumnosARetener}
-                        </p>
-                        <p className="text-claro/80 text-lg mb-8">
-                            {alumnosARetener === 1 ? 'alumno paga' : 'alumnos pagan'} Passo
-                            para <span className="text-claro font-semibold">toda tu academia</span>
-                        </p>
-                        <div className="grid grid-cols-2 gap-4 text-left">
-                            <div className="p-4 rounded-2xl bg-noche/60 border border-claro/10">
-                                <p className="font-mono text-[10px] uppercase tracking-widest text-claro/50 mb-1">Costo mensual Passo</p>
-                                <p className="text-claro font-bold">{fmtCOP.format(costoPasso)}</p>
-                            </div>
-                            <div className="p-4 rounded-2xl bg-noche/60 border border-claro/10">
-                                <p className="font-mono text-[10px] uppercase tracking-widest text-claro/50 mb-1">De cada mensualidad</p>
-                                <p className="text-claro font-bold">{porcentaje}%</p>
-                            </div>
-                        </div>
-                        <p className="font-display italic text-claro/60 mt-8">
-                            Con la mensualidad de 2 a 4 alumnos, ya está pagado Passo para toda tu academia.
-                        </p>
-                    </div>
-                </motion.div>
+                    </Card>
+                </Reveal>
             </div>
         </section>
     );
-};
+}
 
-export default Calculadora;
+export default withAntd(Calculadora);
