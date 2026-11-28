@@ -37,7 +37,7 @@ function AppAlumnos() {
                         resaltado="en su bolsillo"
                         bajada="Cada alumno ve su recorrido: asistencia, logros y pagos. Motivación que se traduce en permanencia para tu academia."
                     />
-                    <div className="mt-10 grid sm:grid-cols-2 gap-4">
+                    <div className="mt-8 lg:mt-10 w-fit mx-auto lg:w-auto lg:mx-0 grid sm:grid-cols-2 gap-x-6 gap-y-3 lg:gap-4">
                         {features.map((f, i) => (
                             <Reveal key={f.label} delay={i * 0.05}>
                                 <div className="flex items-center gap-3 py-1">

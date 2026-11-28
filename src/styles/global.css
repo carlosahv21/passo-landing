@@ -42,26 +42,26 @@
 
     /* Escala tipográfica única para toda la landing */
     .t-hero {
-        font-size: clamp(2.25rem, 1rem + 2.2vw, 3.25rem);
+        font-size: clamp(1.85rem, 1rem + 2.2vw, 3.25rem);
         line-height: 1.07;
         font-weight: 800;
         letter-spacing: -0.04em;
     }
     .t-h2 {
-        font-size: clamp(1.9rem, 0.9rem + 1.75vw, 2.6rem);
+        font-size: clamp(1.65rem, 0.9rem + 1.75vw, 2.6rem);
         line-height: 1.12;
         font-weight: 800;
         letter-spacing: -0.03em;
     }
     /* Cita de la marca (Manifiesto): título de sección, pero a lo ancho de la página */
     .t-cita {
-        font-size: clamp(1.9rem, 0.9rem + 2.2vw, 3.2rem);
+        font-size: clamp(1.6rem, 0.9rem + 2.2vw, 3.2rem);
         line-height: 1.15;
         font-weight: 800;
         letter-spacing: -0.035em;
     }
     .t-h3 {
-        font-size: clamp(1.45rem, 2vw, 1.75rem);
+        font-size: clamp(1.35rem, 2vw, 1.75rem);
         line-height: 1.2;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -73,18 +73,19 @@
         letter-spacing: -0.01em;
     }
     .t-lead {
-        font-size: 1.0625rem;
-        line-height: 1.7;
+        font-size: 1rem;
+        line-height: 1.65;
     }
     @media (min-width: 768px) {
         .t-lead {
             font-size: 1.125rem;
+            line-height: 1.7;
         }
     }
 
     /* Secciones: el fondo cambia para separar bloques de información */
     .seccion {
-        @apply relative py-16 md:py-24;
+        @apply relative py-14 md:py-24;
     }
     .seccion-blanca {
         @apply bg-white;
@@ -124,6 +125,27 @@
 @media (min-width: 768px) {
     .hero-banda {
         clip-path: polygon(0 0, 100% 0, 100% 80%, 74% 84%, 44% 90%, 0 100%);
+    }
+}
+
+/* Cinta que se desplaza sola: el contenido va duplicado y se mueve la mitad de su ancho */
+@keyframes cinta {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+.cinta {
+    animation: cinta 28s linear infinite;
+}
+.cinta-mascara {
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+    .cinta {
+        animation: none;
     }
 }
 

@@ -45,7 +45,7 @@ const SeccionTitulo: React.FC<{
 
     if (alinear === 'left') {
         return (
-            <Reveal className={`max-w-2xl ${className}`}>
+            <Reveal className={`max-w-2xl mx-auto lg:mx-0 text-center lg:text-left ${className}`}>
                 <Eyebrow className="mb-5">{eyebrow}</Eyebrow>
                 {h2}
                 {bajada && <p className={`mt-4 t-lead ${colorBajada}`}>{bajada}</p>}
@@ -54,7 +54,7 @@ const SeccionTitulo: React.FC<{
     }
 
     return (
-        <Reveal className={`grid lg:grid-cols-12 gap-x-10 gap-y-4 items-end ${className}`}>
+        <Reveal className={`grid lg:grid-cols-12 gap-x-10 gap-y-4 items-end text-center lg:text-left ${className}`}>
             <div className="lg:col-span-7">
                 <Eyebrow className="mb-5">{eyebrow}</Eyebrow>
                 {h2}

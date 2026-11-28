@@ -8,7 +8,7 @@ const Manifesto = () => (
                 <blockquote className="t-cita italic text-tinta xl:whitespace-nowrap text-center">
                     “El baile conecta personas. <span className="text-azul">El baile transforma vidas.</span>”
                 </blockquote>
-                <p className="mt-4 t-lead text-gris text-right">Cada alumno deja una huella. Passo la registra.</p>
+                <p className="mt-4 t-lead text-gris text-center md:text-right">Cada alumno deja una huella. Passo la registra.</p>
             </Reveal>
         </div>
     </section>

@@ -19,9 +19,9 @@ const Enlace: React.FC<{ onClick: () => void; children: React.ReactNode }> = ({ 
 function Footer() {
     return (
         <footer className="bg-white border-t border-linea">
-            <div className="contenedor pt-16 pb-8">
-                <div className="grid md:grid-cols-4 gap-12">
-                    <div className="md:col-span-2">
+            <div className="contenedor pt-16 pb-24 md:pb-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-12">
+                    <div className="col-span-2">
                         <Logo className="h-8" />
                         <p className="mt-5 text-lg font-semibold text-tinta">Toda transformación comienza con un paso.</p>
                         <p className="mt-3 max-w-sm text-gris leading-relaxed">

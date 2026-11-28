@@ -282,7 +282,7 @@ function Hero() {
         : { scale: escala, rotateX: inclinacion, transformPerspective: 1400, transformOrigin: '50% 0%' };
 
     return (
-        <header className="relative pt-28 md:pt-32 overflow-hidden">
+        <header className="relative pt-24 md:pt-32 overflow-hidden">
             {/* Fondo azul a todo el ancho con borde inferior irregular */}
             <div className="absolute inset-x-0 top-0 h-[760px] md:h-[720px] -z-10 overflow-hidden" aria-hidden="true">
                 <div className="hero-banda absolute inset-0" />
@@ -303,14 +303,14 @@ function Hero() {
                     Menos tiempo administrando.
                     <br className="hidden sm:block" /> Más tiempo haciendo <span className="text-oro">crecer</span> tu academia.
                 </motion.h1>
-                <motion.p {...flotar(0.16)} className="mt-4 max-w-2xl mx-auto text-base md:text-[17px] text-white/80 leading-relaxed">
+                <motion.p {...flotar(0.16)} className="mt-3 md:mt-4 max-w-2xl mx-auto text-[15px] md:text-[17px] text-white/80 leading-normal md:leading-relaxed">
                     Passo organiza pagos, asistencia y el progreso de tus alumnos para que te enfoques en lo más
                     importante: transformar vidas a través del baile.
                 </motion.p>
-                <motion.p {...flotar(0.2)} className="mt-3 text-[13px] text-white/65">
+                <motion.p {...flotar(0.2)} className="mt-2.5 md:mt-3 text-[12px] md:text-[13px] text-white/65">
                     Sin tarjeta de crédito o débito · Demo con todas las funciones Pro
                 </motion.p>
-                <motion.div {...flotar(0.24)} className="mt-6 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <motion.div {...flotar(0.24)} className="mt-5 md:mt-6 flex flex-col sm:flex-row gap-1.5 sm:gap-3 justify-center items-center">
                     <Button
                         size="large"
                         className="!bg-white !text-azul !border-white !font-bold hover:!bg-white/90"
@@ -352,7 +352,7 @@ function Hero() {
 
                         {/* Celular: sobre el panel en escritorio, solo en móvil */}
                         <div className="md:absolute md:-right-4 lg:-right-10 xl:-right-14 md:-bottom-16 flex justify-center">
-                            <div className="w-[280px] md:w-[300px] md:origin-bottom-right md:scale-[0.72] lg:scale-[0.8]">
+                            <div className="w-[280px] md:w-[300px] origin-top scale-[0.88] -mb-[72px] md:mb-0 md:origin-bottom-right md:scale-[0.72] lg:scale-[0.8]">
                                 <motion.div {...flotar(0.45)}>
                                     <Telefono className="h-[600px]">
                                         <PantallaApp demo={demo} />
@@ -372,13 +372,13 @@ function Hero() {
             </div>
 
             {/* Franja de confianza */}
-            <div className="contenedor pt-24 md:pt-32 pb-14">
+            <div className="contenedor pt-20 md:pt-32 pb-14">
                 <p className="text-center t-card text-tinta">Hecho para academias de baile</p>
-                <div className="mt-7 grid grid-cols-2 xl:flex xl:flex-nowrap xl:justify-between gap-y-5 gap-x-6 max-w-6xl mx-auto">
+                <div className="mt-6 md:mt-7 w-fit sm:w-auto grid grid-cols-1 sm:grid-cols-2 xl:flex xl:flex-nowrap xl:justify-between gap-y-4 sm:gap-y-5 gap-x-6 max-w-6xl mx-auto">
                     {confianza.map((c) => (
                         <div key={c.label} className="flex items-center gap-3">
                             <Avatar size={40} style={{ background: '#0A84FF', fontSize: 18, flexShrink: 0 }} icon={c.icon} />
-                            <span className="text-[14.5px] font-medium text-tinta leading-snug xl:whitespace-nowrap">{c.label}</span>
+                            <span className="text-[14.5px] font-medium text-tinta leading-snug whitespace-nowrap sm:whitespace-normal xl:whitespace-nowrap">{c.label}</span>
                         </div>
                     ))}
                 </div>

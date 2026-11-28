@@ -101,6 +101,13 @@ const VisualReportes = () => (
     </div>
 );
 
+const ChipCapacidad: React.FC<{ c: string }> = ({ c }) => (
+    <span className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl bg-white px-4 py-2 text-sm font-medium text-tinta shadow-sm">
+        <CheckCircleFilled style={{ color: '#0A84FF' }} />
+        {c}
+    </span>
+);
+
 const capacidades = ['Profesores', 'Clases y horarios', 'Eventos', 'Logros y rachas', 'App móvil', 'Planes y paquetes'];
 
 const filas = [
@@ -157,16 +164,16 @@ function Producto() {
                     unaLinea
                 />
 
-                <div className="mt-14 md:mt-20 space-y-24 md:space-y-32">
+                <div className="mt-12 md:mt-20 space-y-20 md:space-y-32">
                     {filas.map((f, i) => {
                         const visualIzquierda = i % 2 === 1;
                         return (
                             <div key={f.titulo} className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                                <Reveal className={visualIzquierda ? 'lg:order-2' : ''}>
+                                <Reveal className={`text-center lg:text-left ${visualIzquierda ? 'lg:order-2' : ''}`}>
                                     <Avatar size={52} style={{ background: `${f.color}1F`, color: f.color, fontSize: 24 }} icon={f.icon} />
-                                    <h3 className="mt-5 t-h3">{f.titulo}</h3>
-                                    <p className="mt-3 t-lead text-gris max-w-xl">{f.texto}</p>
-                                    <div className="mt-7 space-y-4">
+                                    <h3 className="mt-4 lg:mt-5 t-h3">{f.titulo}</h3>
+                                    <p className="mt-3 t-lead text-gris max-w-xl mx-auto lg:mx-0">{f.texto}</p>
+                                    <div className="mt-6 lg:mt-7 space-y-4 text-left max-w-md mx-auto lg:max-w-none lg:mx-0">
                                         {f.puntos.map((p) => (
                                             <div key={p.t} className="flex gap-3">
                                                 <CheckCircleFilled style={{ color: '#0A84FF', fontSize: 20, marginTop: 2 }} />
@@ -205,14 +212,26 @@ function Producto() {
                     })}
                 </div>
 
-                <Reveal className="mt-24 flex flex-wrap items-center justify-center gap-2.5">
+                <Reveal className="mt-20 md:mt-24 hidden lg:flex flex-wrap items-center justify-center gap-2.5">
                     <span className="mr-2 font-semibold text-tinta">Y además:</span>
                     {capacidades.map((c) => (
-                        <span key={c} className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-tinta shadow-sm">
-                            <CheckCircleFilled style={{ color: '#0A84FF' }} />
-                            {c}
-                        </span>
+                        <ChipCapacidad key={c} c={c} />
                     ))}
+                </Reveal>
+                <Reveal className="mt-20 md:mt-24 lg:hidden">
+                    <p className="text-center font-semibold text-tinta">Y además:</p>
+                    <div className="mt-3 -mx-5 md:-mx-8 overflow-x-auto cinta-mascara [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div className="cinta flex w-max gap-2.5 py-1 px-5" aria-hidden="true">
+                            {[...capacidades, ...capacidades].map((c, i) => (
+                                <ChipCapacidad key={`${c}-${i}`} c={c} />
+                            ))}
+                        </div>
+                        <ul className="sr-only">
+                            {capacidades.map((c) => (
+                                <li key={c}>{c}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </Reveal>
             </div>
         </section>

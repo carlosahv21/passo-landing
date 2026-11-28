@@ -18,16 +18,16 @@ function CTAFinal() {
                         </svg>
                         <Huella size={70} rotate={18} className="absolute right-[36%] -top-8 text-white/10" />
                         <div className="relative grid xl:grid-cols-[minmax(0,1fr)_auto] gap-8 items-center">
-                            <div className="min-w-0">
+                            <div className="min-w-0 text-center xl:text-left">
                                 <h2 className="t-h2 !text-white">
                                     ¿Listo para dar el siguiente paso?
                                 </h2>
-                                <p className="mt-4 t-lead text-white/85 max-w-2xl">
+                                <p className="mt-4 t-lead text-white/85 max-w-2xl mx-auto xl:mx-0">
                                     Prueba Passo gratis por 30 días con todas las funciones Pro y descubre todo lo que puede
                                     hacer por tu academia.
                                 </p>
                             </div>
-                            <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:items-center justify-center">
                                 <Button
                                     size="large"
                                     className="!bg-white !text-azul !border-white !font-bold hover:!bg-white/90"

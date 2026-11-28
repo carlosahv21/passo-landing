@@ -13,7 +13,7 @@ import NotaMano from './ui/NotaMano';
 const abrirRegistro = () => useModalStore.getState().openModal('registro');
 
 const Celda: React.FC<{ valor: string | boolean; activo: boolean }> = ({ valor, activo }) => (
-    <td className={`px-4 py-3 text-center ${activo ? 'bg-azul-suave/60' : ''}`}>
+    <td className={`px-2 sm:px-4 py-3 text-center whitespace-nowrap ${activo ? 'bg-azul-suave/60' : ''}`}>
         {valor === true ? (
             <CheckCircleFilled style={{ color: '#0A84FF', fontSize: 17 }} />
         ) : valor === false ? (
@@ -40,7 +40,7 @@ function Pricing() {
 
                 <Reveal className="mt-8 flex flex-col items-center gap-5">
                     <Tag color="blue" variant="filled" icon={<GiftOutlined />} className="!px-4 !py-1.5 !text-sm !rounded-lg !m-0 !whitespace-normal !h-auto max-w-full text-center">
-                        Demo: {DEMO.dias} días gratis con todo Pro, en cualquier plan
+                        <span className="text-center">Demo: {DEMO.dias} días gratis con todo Pro, en cualquier plan</span>
                     </Tag>
                     <div className="relative">
                         <TipoToggle tipo={tipo} onChange={setTipo} />
@@ -74,12 +74,12 @@ function Pricing() {
                                 className="w-full overflow-hidden"
                             >
                                 <div className="rounded-2xl border border-linea overflow-hidden">
-                                    <table className="w-full text-[15px]">
+                                    <table className="w-full text-[13.5px] sm:text-[15px]">
                                         <thead>
                                             <tr className="bg-fondo text-tinta">
-                                                <th className="px-4 py-3 text-left font-semibold">Funcionalidad</th>
+                                                <th className="px-3 sm:px-4 py-3 text-left font-semibold">Funcionalidad</th>
                                                 {(Object.keys(TIPOS) as Tipo[]).map((k) => (
-                                                    <th key={k} className={`px-4 py-3 w-1/4 font-bold ${tipo === k ? 'text-azul bg-azul-suave' : ''}`}>
+                                                    <th key={k} className={`px-2 sm:px-4 py-3 w-[78px] sm:w-1/4 font-bold ${tipo === k ? 'text-azul bg-azul-suave' : ''}`}>
                                                         {TIPOS[k].nombre}
                                                     </th>
                                                 ))}
@@ -88,7 +88,10 @@ function Pricing() {
                                         <tbody className="divide-y divide-linea">
                                             {COMPARACION.map((f) => (
                                                 <tr key={f.funcion}>
-                                                    <td className="px-4 py-3 text-gris">{f.funcion}</td>
+                                                    <td className="px-3 sm:px-4 py-3 text-gris">
+                                                        <span className="sm:hidden whitespace-nowrap">{f.corto ?? f.funcion}</span>
+                                                        <span className="hidden sm:inline">{f.funcion}</span>
+                                                    </td>
                                                     <Celda valor={f.basico} activo={tipo === 'basico'} />
                                                     <Celda valor={f.pro} activo={tipo === 'pro'} />
                                                 </tr>
@@ -101,7 +104,7 @@ function Pricing() {
                     </AnimatePresence>
                 </Reveal>
 
-                <div className="mt-12 grid md:grid-cols-3 gap-6 items-stretch">
+                <div className="mt-12 grid lg:grid-cols-3 gap-6 items-stretch max-w-xl lg:max-w-none mx-auto">
                     {PLANES.map((plan, i) => (
                         <Reveal key={plan.id} delay={i * 0.08}>
                             <Card

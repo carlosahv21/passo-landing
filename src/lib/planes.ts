@@ -74,13 +74,14 @@ export const TIPOS: Record<Tipo, { nombre: string; resumen: string; funcionalida
 // Demo: prueba gratis con todas las funcionalidades Pro, en cualquier plan, por tiempo limitado.
 // Al vencer, la academia elige su plan (según alumnos activos) y el tipo (Básico o Pro).
 // Diferencias entre Básico y Pro (true = incluido, false = no incluido, texto = límite)
-export const COMPARACION: { funcion: string; basico: string | boolean; pro: string | boolean }[] = [
+// `corto`: nombre para celular, para que cada fila quepa en una sola línea
+export const COMPARACION: { funcion: string; corto?: string; basico: string | boolean; pro: string | boolean }[] = [
     { funcion: 'Administradores', basico: 'Hasta 3', pro: 'Ilimitados' },
-    { funcion: 'Reportes personalizados', basico: '1', pro: '5' },
-    { funcion: 'Módulos cruzados por reporte', basico: '2', pro: '3' },
+    { funcion: 'Reportes personalizados', corto: 'Reportes a medida', basico: '1', pro: '5' },
+    { funcion: 'Módulos cruzados por reporte', corto: 'Módulos por reporte', basico: '2', pro: '3' },
     { funcion: 'Historial de reportes', basico: '180 días', pro: 'Completo' },
-    { funcion: 'Módulo de costos de academia', basico: false, pro: true },
-    { funcion: 'Dashboard personalizable por rol', basico: false, pro: true },
+    { funcion: 'Módulo de costos de academia', corto: 'Módulo de costos', basico: false, pro: true },
+    { funcion: 'Dashboard personalizable por rol', corto: 'Dashboard por rol', basico: false, pro: true },
     { funcion: 'App móvil completa', basico: true, pro: true },
 ];
 
