@@ -12,6 +12,7 @@ import SeccionTitulo from './ui/SeccionTitulo';
 import Formas from './ui/Formas';
 import NotaMano from './ui/NotaMano';
 import Reveal from './ui/Reveal';
+import CodigoQR from './ui/CodigoQR';
 
 // Visuales de ejemplo dentro de cada tarjeta (ilustrativos)
 const VisualPagos = () => (
@@ -34,6 +35,19 @@ const VisualPagos = () => (
 
 const VisualAsistencia = () => (
     <div>
+        {/* El alumno muestra su QR al llegar y queda marcado en la clase */}
+        <div className="flex items-center gap-4 rounded-2xl bg-fondo p-3 mb-5">
+            <CodigoQR className="w-[72px] h-[72px] shrink-0 !p-1.5" />
+            <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
+                <div>
+                    <p className="text-xs text-suave">QR de Valeria Gómez</p>
+                    <p className="text-sm font-semibold text-tinta">Escaneado · 5:58 p. m.</p>
+                </div>
+                <Tag color="success" variant="filled" icon={<CheckCircleFilled />} className="!m-0 self-start sm:self-auto">
+                    En la lista
+                </Tag>
+            </div>
+        </div>
         <div className="flex items-center justify-between">
             <div>
                 <p className="text-sm font-semibold text-tinta">Salsa caleña · 6:00 p. m.</p>
@@ -169,9 +183,9 @@ function Producto() {
                                     <Formas variante={f.forma} color={f.color === '#F2B33D' ? '#0A84FF' : f.color} className="-inset-y-16 md:-inset-y-20" />
                                     {i === 1 && (
                                         <NotaMano flecha="abajo-derecha" className="absolute -top-28 -left-6 z-10 hidden xl:block">
-                                            Llegan, escanean
+                                            Escanean su QR
                                             <br />
-                                            y listo
+                                            y quedan en la lista
                                         </NotaMano>
                                     )}
                                     <Card variant="borderless" className="relative !rounded-3xl shadow-flotante max-w-[560px] mx-auto">
