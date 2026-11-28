@@ -12,17 +12,19 @@ const SeccionTitulo: React.FC<{
     bajada?: React.ReactNode;
     alinear?: 'center' | 'split' | 'left';
     sobreAzul?: boolean;
+    /** Clase de color del resaltado (por defecto azul, o dorado sobre azul) */
+    colorResaltado?: string;
     /** Título y bajada en una sola línea desde xl */
     unaLinea?: boolean;
     className?: string;
-}> = ({ eyebrow, titulo, resaltado, bajada, alinear = 'center', sobreAzul = false, unaLinea = false, className = '' }) => {
+}> = ({ eyebrow, titulo, resaltado, bajada, alinear = 'center', sobreAzul = false, colorResaltado, unaLinea = false, className = '' }) => {
     const h2 = (
         <h2 className={`t-h2 ${unaLinea ? 'xl:whitespace-nowrap' : ''}`}>
             {titulo}
             {resaltado && (
                 <>
                     {' '}
-                    <span className={sobreAzul ? 'text-oro' : 'text-azul'}>{resaltado}</span>
+                    <span className={colorResaltado ?? (sobreAzul ? 'text-oro' : 'text-azul')}>{resaltado}</span>
                 </>
             )}
         </h2>

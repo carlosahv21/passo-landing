@@ -1,28 +1,30 @@
 import React from 'react';
-import { Avatar, Card } from 'antd';
-import { WalletOutlined, ScheduleOutlined, FallOutlined } from '@ant-design/icons';
+import { WalletOutlined, ScheduleOutlined, UserDeleteOutlined, CloseOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { withAntd } from '../lib/antd';
 import SeccionTitulo from './ui/SeccionTitulo';
 import Reveal from './ui/Reveal';
 
+// Sección de problema: tono de alerta (rojo), sin el azul de la marca, para que no se lea como solución.
+const ROJO = '#E5484D';
+
 const retos = [
     {
         icon: <WalletOutlined />,
-        color: '#F2B33D',
+        queja: '¿Quién me falta por pagar?',
         title: 'Pagos desordenados',
-        description: 'A mano generan errores y te quitan horas.',
+        description: 'Cuadernos y transferencias sueltas generan errores y te quitan horas.',
     },
     {
         icon: <ScheduleOutlined />,
-        color: '#0A84FF',
+        queja: '¿Dónde anoté la clase del martes?',
         title: 'Asistencias en todos lados',
-        description: 'WhatsApp, Excel y apuntes, sin visión clara.',
+        description: 'Entre WhatsApp, Excel y apuntes nunca tienes la foto completa.',
     },
     {
-        icon: <FallOutlined />,
-        color: '#FF7A45',
+        icon: <UserDeleteOutlined />,
+        queja: '¿Hace cuánto no viene Camila?',
         title: 'No sabes quién deja de asistir',
-        description: 'Sin datos es difícil actuar a tiempo.',
+        description: 'Te enteras cuando el alumno ya se fue y es tarde para actuar.',
     },
 ];
 
@@ -31,23 +33,47 @@ function Retos() {
         <section className="seccion seccion-blanca" id="retos">
             <div className="contenedor">
                 <SeccionTitulo
-                    eyebrow="Los retos de cada academia"
-                    titulo="Lo que hoy te quita tiempo,"
-                    resaltado="Passo lo organiza"
-                    bajada="Si hoy llevas tu academia entre cuadernos, WhatsApp y hojas de cálculo, esto te va a sonar conocido."
-                    unaLinea
+                    eyebrow="¿Te suena conocido?"
+                    titulo="Lo que hoy"
+                    resaltado="te quita tiempo"
+                    colorResaltado="text-[#E5484D]"
+                    bajada="Si llevas tu academia entre cuadernos, WhatsApp y hojas de cálculo, seguro has vivido esto."
                 />
-                <div className="mt-14 grid md:grid-cols-3 gap-6">
+                <div className="mt-12 grid md:grid-cols-3 gap-6">
                     {retos.map((r, i) => (
-                        <Reveal key={r.title} delay={i * 0.08}>
-                            <Card variant="borderless" className="h-full !rounded-3xl !bg-fondo text-center" styles={{ body: { padding: '32px 24px' } }}>
-                                <Avatar size={60} style={{ background: r.color, fontSize: 26, boxShadow: `0 10px 24px -8px ${r.color}` }} icon={r.icon} />
-                                <h3 className="mt-5 t-card xl:whitespace-nowrap">{r.title}</h3>
-                                <p className="mt-2 text-[15px] text-gris leading-relaxed xl:whitespace-nowrap">{r.description}</p>
-                            </Card>
+                        <Reveal key={r.title} delay={i * 0.08} className="h-full">
+                            <div className="h-full rounded-3xl border border-[#F5D5D6] bg-[#FFF8F8] p-7">
+                                <div className="relative w-12 h-12">
+                                    <span
+                                        className="w-12 h-12 rounded-2xl bg-white text-[22px] flex items-center justify-center border border-[#F5D5D6]"
+                                        style={{ color: ROJO }}
+                                    >
+                                        {r.icon}
+                                    </span>
+                                    <span
+                                        className="absolute -right-1.5 -top-1.5 w-5 h-5 rounded-full text-white text-[10px] flex items-center justify-center ring-2 ring-[#FFF8F8]"
+                                        style={{ background: ROJO }}
+                                        aria-hidden="true"
+                                    >
+                                        <CloseOutlined />
+                                    </span>
+                                </div>
+                                <p className="mt-5 font-hand text-[26px] leading-tight text-gris">“{r.queja}”</p>
+                                <h3 className="mt-4 t-card">{r.title}</h3>
+                                <p className="mt-2 text-[15px] text-gris leading-relaxed">{r.description}</p>
+                            </div>
                         </Reveal>
                     ))}
                 </div>
+                <Reveal delay={0.2} className="mt-12 text-center">
+                    <a
+                        href="#producto"
+                        className="inline-flex items-center gap-2 text-[17px] font-semibold text-azul hover:text-cielo transition-colors"
+                    >
+                        Passo lo organiza por ti
+                        <ArrowDownOutlined />
+                    </a>
+                </Reveal>
             </div>
         </section>
     );
