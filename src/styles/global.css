@@ -29,27 +29,33 @@
 }
 
 @layer components {
-    /* Ancho de página: casi todo el ancho en pantallas grandes, con márgenes cómodos */
+    /* Ancho de página proporcional a la pantalla: en monitores anchos llega a 1400px y en
+       laptops (13") deja el mismo aire a los lados en vez de pegarse a los bordes. */
     .contenedor {
         @apply w-full max-w-[1400px] mx-auto px-5 md:px-8 lg:px-12;
+    }
+    @media (min-width: 1024px) {
+        .contenedor {
+            max-width: min(1400px, calc(55vw + 340px));
+        }
     }
 
     /* Escala tipográfica única para toda la landing */
     .t-hero {
-        font-size: clamp(2.25rem, 4vw, 3.25rem);
+        font-size: clamp(2.25rem, 1rem + 2.2vw, 3.25rem);
         line-height: 1.07;
         font-weight: 800;
         letter-spacing: -0.04em;
     }
     .t-h2 {
-        font-size: clamp(1.9rem, 3vw, 2.6rem);
+        font-size: clamp(1.9rem, 0.9rem + 1.75vw, 2.6rem);
         line-height: 1.12;
         font-weight: 800;
         letter-spacing: -0.03em;
     }
     /* Cita de la marca (Manifiesto): título de sección, pero a lo ancho de la página */
     .t-cita {
-        font-size: clamp(1.9rem, 3.25vw, 3.2rem);
+        font-size: clamp(1.9rem, 0.9rem + 2.2vw, 3.2rem);
         line-height: 1.15;
         font-weight: 800;
         letter-spacing: -0.035em;

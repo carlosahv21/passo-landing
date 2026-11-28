@@ -31,7 +31,7 @@ function Navbar() {
     return (
         <nav className="fixed inset-x-0 top-0 z-50 px-3 md:px-6 lg:px-10 pt-4">
             <div
-                className={`max-w-[1416px] mx-auto flex items-center justify-between h-16 pl-5 pr-3 rounded-2xl border transition-all duration-300 ${
+                className={`max-w-[1416px] lg:max-w-[min(1416px,calc(55vw+356px))] mx-auto flex items-center justify-between h-16 pl-5 pr-3 rounded-2xl border transition-all duration-300 ${
                     scrolled
                         ? 'bg-white/90 backdrop-blur-md border-linea shadow-tarjeta'
                         : 'bg-white/95 backdrop-blur-sm border-white shadow-sm'

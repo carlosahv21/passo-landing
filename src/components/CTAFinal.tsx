@@ -17,8 +17,8 @@ function CTAFinal() {
                             <path opacity="0.06" d="M0 230 C 300 150, 560 300, 860 210 S 1120 170, 1200 200 L1200 300 L0 300Z" />
                         </svg>
                         <Huella size={70} rotate={18} className="absolute right-[36%] -top-8 text-white/10" />
-                        <div className="relative grid lg:grid-cols-12 gap-8 items-center">
-                            <div className="lg:col-span-8">
+                        <div className="relative grid xl:grid-cols-[minmax(0,1fr)_auto] gap-8 items-center">
+                            <div className="min-w-0">
                                 <h2 className="t-h2 !text-white">
                                     ¿Listo para dar el siguiente paso?
                                 </h2>
@@ -27,7 +27,7 @@ function CTAFinal() {
                                     hacer por tu academia.
                                 </p>
                             </div>
-                            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 lg:items-end xl:items-center lg:justify-end">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
                                 <Button
                                     size="large"
                                     className="!bg-white !text-azul !border-white !font-bold hover:!bg-white/90"
