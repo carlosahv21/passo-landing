@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Avatar, Button, Card, Progress, Tag } from 'antd';
 import {
     PlayCircleFilled,
@@ -13,33 +13,27 @@ import {
     ThunderboltOutlined,
     MobileOutlined,
     CustomerServiceOutlined,
+    UserAddOutlined,
 } from '@ant-design/icons';
 import { useModalStore } from '../store/modalStore';
 import { withAntd } from '../lib/antd';
 import Telefono from './ui/Telefono';
 import NotaMano from './ui/NotaMano';
 import VentanaWeb from './ui/VentanaWeb';
+import Contador, { pesos, useContador, useDestello } from './ui/Contador';
+import { useDemoEnVivo, type Aviso, type Clase, type DemoEnVivo, type Pago } from './ui/demoEnVivo';
 import { Figura } from './ui/Mancha';
 
 const abrir = (m: 'registro' | 'video') => useModalStore.getState().openModal(m);
 
-// Datos de ejemplo de la escena (ilustrativos)
-const pagos = [
-    { nombre: 'Valeria Gómez', detalle: 'Mensualidad · hoy', valor: '+$110.000', color: '#0A84FF' },
-    { nombre: 'Andrés Ríos', detalle: 'Paquete 8 clases · ayer', valor: '+$95.000', color: '#22A06B' },
-    { nombre: 'Camila Torres', detalle: 'Mensualidad · vence hoy', valor: null, color: '#F2B33D' },
-];
+// Datos de ejemplo de la escena (ilustrativos). Se mueven solos: ver ui/demoEnVivo.ts
+const montoPago = (n: number) => `+$${n.toLocaleString('es-CO')}`;
 
 const accesos = [
     { icon: <QrcodeOutlined />, label: 'Asistencia' },
     { icon: <DollarOutlined />, label: 'Cobrar' },
     { icon: <TeamOutlined />, label: 'Alumnos' },
     { icon: <AppstoreOutlined />, label: 'Más' },
-];
-
-const clases = [
-    { nombre: 'Salsa caleña', hora: '6:00 p. m.', cupo: '18/21' },
-    { nombre: 'Bachata', hora: '7:30 p. m.', cupo: '14/16' },
 ];
 
 const confianza = [
@@ -49,59 +43,125 @@ const confianza = [
     { icon: <CustomerServiceOutlined />, label: 'Soporte en español' },
 ];
 
-const PantallaApp = () => (
-    <div className="px-5 pt-3 pb-6">
-        <div className="flex items-center justify-between">
+const iconoAviso: Record<Aviso['tipo'], { icon: React.ReactNode; color: string }> = {
+    pago: { icon: <DollarOutlined />, color: '#22A06B' },
+    asistencia: { icon: <QrcodeOutlined />, color: '#0A84FF' },
+    inscripcion: { icon: <UserAddOutlined />, color: '#F2B33D' },
+};
+
+// Notificación que baja desde arriba del celular con cada evento y se va sola
+const NotificacionApp: React.FC<{ aviso: Aviso | null }> = ({ aviso }) => {
+    const [visible, setVisible] = useState<Aviso | null>(null);
+
+    useEffect(() => {
+        if (!aviso) return;
+        setVisible(aviso);
+        const t = window.setTimeout(() => setVisible(null), 1700);
+        return () => window.clearTimeout(t);
+    }, [aviso]);
+
+    return (
+        <div className="absolute inset-x-3 top-1 z-10 pointer-events-none">
+            <AnimatePresence>
+                {visible && (
+                    <motion.div
+                        key={visible.id}
+                        initial={{ opacity: 0, y: -24, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -16, scale: 0.96 }}
+                        transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                        className="flex items-center gap-2.5 rounded-2xl bg-white/95 backdrop-blur px-3 py-2.5 shadow-[0_10px_30px_-8px_rgba(29,36,51,0.35)] border border-linea"
+                    >
+                        <span
+                            className="w-8 h-8 shrink-0 rounded-xl flex items-center justify-center text-white text-[15px]"
+                            style={{ background: iconoAviso[visible.tipo].color }}
+                        >
+                            {iconoAviso[visible.tipo].icon}
+                        </span>
+                        <div className="min-w-0">
+                            <p className="text-[12px] font-bold text-tinta leading-tight truncate">{visible.titulo}</p>
+                            <p className="text-[10.5px] text-gris truncate">{visible.detalle}</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
+
+// Cupo de una clase en el celular: destella en verde cuando alguien llega
+const CupoClase: React.FC<{ c: Clase }> = ({ c }) => {
+    const ref = useDestello<HTMLDivElement>(c.presentes, { color: 'rgba(10,132,255,0.18)' });
+    const llena = c.presentes >= c.total;
+    return (
+        <div ref={ref} className="flex items-center justify-between rounded-xl border border-linea px-3 py-2.5 bg-white">
             <div>
-                <p className="text-[17px] font-bold text-tinta leading-tight">¡Hola, Laura!</p>
-                <p className="text-[12px] text-gris">Así va tu academia hoy</p>
+                <p className="text-[12.5px] font-semibold text-tinta">{c.nombre}</p>
+                <p className="text-[10.5px] text-gris">{c.hora}</p>
             </div>
-            <Avatar style={{ background: '#E8F3FF', color: '#0A84FF', fontWeight: 700 }}>L</Avatar>
+            <Tag color={llena ? 'green' : 'blue'} variant="filled" className="!m-0 !text-[11px] tabular-nums">
+                {c.presentes}/{c.total}
+            </Tag>
         </div>
+    );
+};
 
-        <div className="mt-4 rounded-2xl bg-gradient-to-br from-azul to-cielo p-4 text-white shadow-[0_12px_24px_-10px_rgba(10,132,255,0.6)]">
-            <p className="text-[12px] text-white/80">Ingresos del mes</p>
-            <p className="text-[26px] font-extrabold tracking-tight leading-tight">$ 8.450.000</p>
-            <div className="flex items-end justify-between">
-                <span className="text-[11px] font-semibold flex items-center gap-1">
-                    <RiseOutlined /> +12% este mes
-                </span>
-                <svg width="96" height="30" viewBox="0 0 96 30" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
-                    <path d="M2 26 C 14 24, 18 14, 30 17 S 46 26, 56 15 S 76 8, 94 3" />
-                </svg>
+const PantallaApp: React.FC<{ demo: DemoEnVivo }> = ({ demo }) => {
+    const saldo = useDestello<HTMLDivElement>(demo.ingresos, {
+        color: 'rgba(77,163,255,0.45)',
+        sombraBase: '0 12px 24px -10px rgba(10,132,255,0.6)',
+    });
+    return (
+        <div className="relative px-5 pt-3 pb-6">
+            <NotificacionApp aviso={demo.aviso} />
+            <div className="flex items-center justify-between">
+                <div>
+                    <p className="text-[17px] font-bold text-tinta leading-tight">¡Hola, Laura!</p>
+                    <p className="text-[12px] text-gris">Así va tu academia hoy</p>
+                </div>
+                <Avatar style={{ background: '#E8F3FF', color: '#0A84FF', fontWeight: 700 }}>L</Avatar>
             </div>
-        </div>
 
-        <div className="mt-4 grid grid-cols-4 gap-2 text-center">
-            {accesos.map((a) => (
-                <div key={a.label}>
-                    <span className="mx-auto w-11 h-11 rounded-full bg-azul-suave text-azul text-[18px] flex items-center justify-center">
-                        {a.icon}
+            <div ref={saldo} className="mt-4 rounded-2xl bg-gradient-to-br from-azul to-cielo p-4 text-white shadow-[0_12px_24px_-10px_rgba(10,132,255,0.6)]">
+                <p className="text-[12px] text-white/80">Ingresos del mes</p>
+                <p className="text-[26px] font-extrabold tracking-tight leading-tight tabular-nums">
+                    <Contador valor={demo.ingresos} formato={pesos} retraso={0.8} />
+                </p>
+                <div className="flex items-end justify-between">
+                    <span className="text-[11px] font-semibold flex items-center gap-1">
+                        <RiseOutlined /> +12% este mes
                     </span>
-                    <p className="mt-1 text-[10.5px] text-gris font-medium">{a.label}</p>
+                    <svg width="96" height="30" viewBox="0 0 96 30" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+                        <path d="M2 26 C 14 24, 18 14, 30 17 S 46 26, 56 15 S 76 8, 94 3" />
+                    </svg>
                 </div>
-            ))}
-        </div>
+            </div>
 
-        <div className="mt-5 flex items-center justify-between">
-            <p className="text-[13px] font-bold text-tinta">Clases de hoy</p>
-            <span className="text-[11px] text-azul font-semibold">Ver todo</span>
-        </div>
-        <div className="mt-2 space-y-2">
-            {clases.map((c) => (
-                <div key={c.nombre} className="flex items-center justify-between rounded-xl border border-linea px-3 py-2.5">
-                    <div>
-                        <p className="text-[12.5px] font-semibold text-tinta">{c.nombre}</p>
-                        <p className="text-[10.5px] text-gris">{c.hora}</p>
+            <div className="mt-4 grid grid-cols-4 gap-2 text-center">
+                {accesos.map((a) => (
+                    <div key={a.label}>
+                        <span className="mx-auto w-11 h-11 rounded-full bg-azul-suave text-azul text-[18px] flex items-center justify-center">
+                            {a.icon}
+                        </span>
+                        <p className="mt-1 text-[10.5px] text-gris font-medium">{a.label}</p>
                     </div>
-                    <Tag color="blue" variant="filled" className="!m-0 !text-[11px]">{c.cupo}</Tag>
-                </div>
-            ))}
-        </div>
-    </div>
-);
+                ))}
+            </div>
 
-const TarjetaPagos = () => (
+            <div className="mt-5 flex items-center justify-between">
+                <p className="text-[13px] font-bold text-tinta">Clases de hoy</p>
+                <span className="text-[11px] text-azul font-semibold">Ver todo</span>
+            </div>
+            <div className="mt-2 space-y-2">
+                {demo.clases.map((c) => (
+                    <CupoClase key={c.nombre} c={c} />
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const TarjetaPagos: React.FC<{ pagos: Pago[] }> = ({ pagos }) => (
     <Card
         size="small"
         title={<span className="font-semibold">Pagos recientes</span>}
@@ -109,50 +169,96 @@ const TarjetaPagos = () => (
         className="!rounded-2xl !border-0 shadow-flotante"
     >
         <div className="divide-y divide-linea">
-            {pagos.map((p) => (
-                <div key={p.nombre} className="flex items-center gap-3 py-2.5 first:pt-1 last:pb-1">
-                    <Avatar size={36} style={{ background: `${p.color}1A`, color: p.color, fontWeight: 700, fontSize: 13 }}>
-                        {p.nombre.split(' ').map((x) => x[0]).join('')}
-                    </Avatar>
-                    <div className="min-w-0 flex-1">
-                        <p className="text-[13px] font-semibold text-tinta leading-tight">{p.nombre}</p>
-                        <p className="text-[11.5px] text-suave">{p.detalle}</p>
-                    </div>
-                    {p.valor ? (
-                        <span className="text-[13px] font-bold text-verde">{p.valor}</span>
-                    ) : (
-                        <Tag color="gold" variant="filled" className="!m-0">Pendiente</Tag>
-                    )}
-                </div>
-            ))}
+            <AnimatePresence initial={false}>
+                {pagos.map((p) => (
+                    <motion.div
+                        key={p.id}
+                        layout
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.45, ease: 'easeOut' }}
+                        className="overflow-hidden"
+                    >
+                        <motion.div
+                            className="flex items-center gap-3 py-2.5 px-1 -mx-1 rounded-lg"
+                            initial={p.nuevo ? { backgroundColor: 'rgba(34,160,107,0.14)' } : false}
+                            animate={{ backgroundColor: 'rgba(34,160,107,0)' }}
+                            transition={{ duration: 1.6, delay: 0.4 }}
+                        >
+                            <Avatar size={36} style={{ background: `${p.color}1A`, color: p.color, fontWeight: 700, fontSize: 13 }}>
+                                {p.nombre.split(' ').map((x) => x[0]).join('')}
+                            </Avatar>
+                            <div className="min-w-0 flex-1">
+                                <p className="text-[13px] font-semibold text-tinta leading-tight">{p.nombre}</p>
+                                <p className="text-[11.5px] text-suave">{p.detalle}</p>
+                            </div>
+                            {p.monto ? (
+                                <span className="text-[13px] font-bold text-verde">{montoPago(p.monto)}</span>
+                            ) : (
+                                <Tag color="gold" variant="filled" className="!m-0">Pendiente</Tag>
+                            )}
+                        </motion.div>
+                    </motion.div>
+                ))}
+            </AnimatePresence>
         </div>
     </Card>
 );
 
-const TarjetaAsistencia = () => (
-    <Card size="small" className="!rounded-2xl !border-0 shadow-flotante">
-        <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold text-tinta">Asistencia de hoy</span>
-            <Tag color="green" variant="filled" className="!m-0">En vivo</Tag>
-        </div>
-        <div className="flex items-center gap-4">
-            <Progress
-                type="circle"
-                percent={86}
-                size={88}
-                strokeWidth={9}
-                format={(p) => <span className="text-lg font-extrabold text-tinta">{p}%</span>}
-            />
-            <div>
-                <p className="text-[13.5px] font-semibold text-tinta leading-tight">Salsa caleña</p>
-                <p className="text-[12px] text-gris">18 de 21 alumnos</p>
-                <p className="mt-1.5 text-[11.5px] text-suave flex items-center gap-1">
-                    <QrcodeOutlined /> Marcaron con QR
-                </p>
+// Asistencia de la clase en curso: el aro y el conteo suben con cada llegada; al llenarse pasa a la siguiente clase
+const TarjetaAsistencia: React.FC<{ clase: Clase; ultimaLlegada: string | null }> = ({ clase, ultimaLlegada }) => {
+    const reducir = useReducedMotion();
+    const porcentaje = Math.round(useContador((clase.presentes / clase.total) * 100, { retraso: 1, duracion: 1.8 }));
+    const presentes = Math.round(useContador(clase.presentes, { retraso: 1, duracion: 1.8 }));
+    const entrar = reducir ? false : { opacity: 0, y: 6 };
+    return (
+        <Card size="small" className="!rounded-2xl !border-0 shadow-flotante">
+            <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold text-tinta">Asistencia de hoy</span>
+                <Tag color="green" variant="filled" className="!m-0">
+                    <span className="inline-flex items-center gap-1.5">
+                        <span className="relative flex w-1.5 h-1.5">
+                            {!reducir && <span className="absolute inline-flex h-full w-full rounded-full bg-verde opacity-75 animate-ping" />}
+                            <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-verde" />
+                        </span>
+                        En vivo
+                    </span>
+                </Tag>
             </div>
-        </div>
-    </Card>
-);
+            <div className="flex items-center gap-4">
+                <Progress
+                    type="circle"
+                    percent={porcentaje}
+                    size={88}
+                    strokeWidth={9}
+                    strokeColor={clase.presentes >= clase.total ? '#22A06B' : undefined}
+                    format={(p) => <span className="text-lg font-extrabold text-tinta tabular-nums">{p}%</span>}
+                />
+                <div className="min-w-0">
+                    <motion.p key={clase.nombre} initial={entrar} animate={{ opacity: 1, y: 0 }} className="text-[13.5px] font-semibold text-tinta leading-tight">
+                        {clase.nombre}
+                    </motion.p>
+                    <p className="text-[12px] text-gris tabular-nums">
+                        {presentes} de {clase.total} alumnos
+                    </p>
+                    <AnimatePresence mode="wait" initial={false}>
+                        <motion.p
+                            key={ultimaLlegada ?? 'inicio'}
+                            initial={entrar}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={reducir ? undefined : { opacity: 0, y: -6 }}
+                            transition={{ duration: 0.3 }}
+                            className={`mt-1.5 text-[11.5px] flex items-center gap-1 ${ultimaLlegada ? 'text-azul font-medium' : 'text-suave'}`}
+                        >
+                            <QrcodeOutlined /> {ultimaLlegada ? `${ultimaLlegada.split(' ')[0]} acaba de llegar` : 'Marcaron con QR'}
+                        </motion.p>
+                    </AnimatePresence>
+                </div>
+            </div>
+        </Card>
+    );
+};
 
 const flotar = (delay: number) => ({
     initial: { opacity: 0, y: 24 },
@@ -161,6 +267,20 @@ const flotar = (delay: number) => ({
 });
 
 function Hero() {
+    const reducir = useReducedMotion();
+    const demo = useDemoEnVivo();
+    const { scrollY } = useScroll();
+    const avance = useSpring(useTransform(scrollY, [0, 420], [0, 1], { clamp: true }), {
+        stiffness: 140,
+        damping: 26,
+        mass: 0.4,
+    });
+    const escala = useTransform(avance, [0, 1], [0.9, 1]);
+    const inclinacion = useTransform(avance, [0, 1], [12, 0]);
+    const zoom = reducir
+        ? undefined
+        : { scale: escala, rotateX: inclinacion, transformPerspective: 1400, transformOrigin: '50% 0%' };
+
     return (
         <header className="relative pt-28 md:pt-32 overflow-hidden">
             {/* Fondo azul a todo el ancho con borde inferior irregular */}
@@ -211,7 +331,7 @@ function Hero() {
             </div>
 
             {/* Escena: panel web a lo ancho, celular encima y tarjetas flotantes */}
-            <div className="contenedor mt-10 md:mt-12">
+            <div className="contenedor mt-10 md:mt-20">
                 <div className="relative mx-auto max-w-[1180px]">
                     <NotaMano flecha="abajo-derecha" className="absolute -left-2 xl:-left-6 -top-44 hidden xl:block text-white">
                         Cobros claros,
@@ -224,38 +344,41 @@ function Hero() {
                         constantes
                     </NotaMano>
 
-                    <motion.div {...flotar(0.3)} className="hidden md:block md:pr-16 lg:pl-8 lg:pr-32">
-                        <VentanaWeb />
-                    </motion.div>
+                    {/* Zoom con scroll: envuelve panel, celular y tarjetas (las notas a mano quedan fuera) */}
+                    <motion.div className="relative" style={zoom}>
+                        <motion.div {...flotar(0.3)} className="hidden md:block md:pr-24 lg:pl-20 lg:pr-44">
+                            <VentanaWeb datos={demo} />
+                        </motion.div>
 
-                    {/* Celular: sobre el panel en escritorio, solo en móvil */}
-                    <div className="md:absolute md:-right-4 lg:-right-2 md:-bottom-16 flex justify-center">
-                        <div className="w-[280px] md:w-[300px] md:origin-bottom-right md:scale-[0.72] lg:scale-[0.8]">
-                            <motion.div {...flotar(0.45)}>
-                                <Telefono className="h-[600px]">
-                                    <PantallaApp />
-                                </Telefono>
-                            </motion.div>
+                        {/* Celular: sobre el panel en escritorio, solo en móvil */}
+                        <div className="md:absolute md:-right-4 lg:-right-10 xl:-right-14 md:-bottom-16 flex justify-center">
+                            <div className="w-[280px] md:w-[300px] md:origin-bottom-right md:scale-[0.72] lg:scale-[0.8]">
+                                <motion.div {...flotar(0.45)}>
+                                    <Telefono className="h-[600px]">
+                                        <PantallaApp demo={demo} />
+                                    </Telefono>
+                                </motion.div>
+                            </div>
                         </div>
-                    </div>
 
-                    <motion.div {...flotar(0.55)} className="absolute -left-2 xl:-left-10 top-[38%] w-[280px] hidden md:block">
-                        <TarjetaPagos />
-                    </motion.div>
-                    <motion.div {...flotar(0.65)} className="absolute right-[24%] -top-12 w-[270px] hidden lg:block">
-                        <TarjetaAsistencia />
+                        <motion.div {...flotar(0.55)} className="absolute -left-2 lg:-left-8 xl:-left-14 top-[42%] w-[260px] hidden md:block">
+                            <TarjetaPagos pagos={demo.pagos} />
+                        </motion.div>
+                        <motion.div {...flotar(0.65)} className="absolute left-[30%] -bottom-14 w-[270px] hidden lg:block">
+                            <TarjetaAsistencia clase={demo.clases[demo.claseActual]} ultimaLlegada={demo.ultimaLlegada} />
+                        </motion.div>
                     </motion.div>
                 </div>
             </div>
 
             {/* Franja de confianza */}
-            <div className="contenedor pt-24 md:pt-28 pb-14">
+            <div className="contenedor pt-24 md:pt-32 pb-14">
                 <p className="text-center t-card text-tinta">Hecho para academias de baile</p>
-                <div className="mt-7 grid grid-cols-2 lg:flex lg:flex-nowrap lg:justify-between gap-y-5 gap-x-6 max-w-6xl mx-auto">
+                <div className="mt-7 grid grid-cols-2 xl:flex xl:flex-nowrap xl:justify-between gap-y-5 gap-x-6 max-w-6xl mx-auto">
                     {confianza.map((c) => (
                         <div key={c.label} className="flex items-center gap-3">
                             <Avatar size={40} style={{ background: '#0A84FF', fontSize: 18, flexShrink: 0 }} icon={c.icon} />
-                            <span className="text-[14.5px] font-medium text-tinta leading-snug lg:whitespace-nowrap">{c.label}</span>
+                            <span className="text-[14.5px] font-medium text-tinta leading-snug xl:whitespace-nowrap">{c.label}</span>
                         </div>
                     ))}
                 </div>
