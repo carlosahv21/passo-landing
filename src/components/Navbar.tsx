@@ -41,7 +41,7 @@ function Navbar() {
                     <Logo className="h-7" />
                 </a>
 
-                <div className="hidden md:flex items-center gap-1">
+                <div className="hidden xl:flex items-center gap-1">
                     {links.map((l) => (
                         <Button key={l.id} type="text" onClick={() => irA(l.id)} className="!text-gris hover:!text-tinta !font-medium">
                             {l.label}
@@ -49,7 +49,7 @@ function Navbar() {
                     ))}
                 </div>
 
-                <div className="hidden md:flex items-center gap-2">
+                <div className="hidden xl:flex items-center gap-2">
                     <Button type="text" href={APP_URL} className="!font-semibold !text-tinta">
                         Iniciar sesión
                     </Button>
@@ -59,7 +59,7 @@ function Navbar() {
                 </div>
 
                 <Button
-                    className="md:!hidden"
+                    className="xl:!hidden"
                     type="text"
                     size="large"
                     icon={<MenuOutlined />}
